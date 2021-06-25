@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
-import com.shafaei.imageFinder.placeholder.PlaceholderContent
+import com.shafaei.imageFinder.placeholder.*
 
 /**
  * A fragment representing a single Item detail screen.
@@ -20,7 +20,7 @@ class ItemDetailFragment : Fragment() {
   /**
    * The placeholder content this fragment is presenting.
    */
-  private var item: PlaceholderContent.PlaceholderItem? = null
+  private var item: PixaBayItem? = null
 
   lateinit var itemDetailTextView: TextView
 
@@ -46,17 +46,17 @@ class ItemDetailFragment : Fragment() {
   override fun onCreateView(
      inflater: LayoutInflater, container: ViewGroup?,
      savedInstanceState: Bundle?,
-  ): View? {
+  ): View {
 
     _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
     val rootView = binding.root
 
-    binding.toolbarLayout?.title = item?.content
+    binding.toolbarLayout?.title = item?.userName
 
     itemDetailTextView = binding.itemDetail
     // Show the placeholder content as text in a TextView.
     item?.let {
-      itemDetailTextView.text = it.details
+      itemDetailTextView.text = it.tagList.joinToString ()
     }
 
     return rootView

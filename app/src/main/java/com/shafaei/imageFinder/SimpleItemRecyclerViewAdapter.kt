@@ -5,20 +5,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.*
 import com.shafaei.imageFinder.SimpleItemRecyclerViewAdapter.ViewHolder
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
-import com.shafaei.imageFinder.placeholder.PlaceholderContent.PlaceholderItem
+import com.shafaei.imageFinder.placeholder.PixaBayItem
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<PlaceholderItem, ViewHolder>(object : DiffUtil.ItemCallback<PlaceholderItem>() {
-  override fun areItemsTheSame(oldItem: PlaceholderItem, newItem: PlaceholderItem): Boolean {
+class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<PixaBayItem, ViewHolder>(object : DiffUtil.ItemCallback<PixaBayItem>() {
+  override fun areItemsTheSame(oldItem: PixaBayItem, newItem: PixaBayItem): Boolean {
     return (oldItem.id == newItem.id)
   }
 
-  override fun areContentsTheSame(oldItem: PlaceholderItem, newItem: PlaceholderItem): Boolean {
+  override fun areContentsTheSame(oldItem: PixaBayItem, newItem: PixaBayItem): Boolean {
     return (oldItem == newItem)
   }
 }) {
-  private val items: MutableList<PlaceholderItem> = ArrayList()
+  private val items: MutableList<PixaBayItem> = ArrayList()
 
   private val mClicks: PublishSubject<View> = PublishSubject.create()
   val clicks: Observable<View> = mClicks
@@ -31,7 +31,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val item = items[position]
     holder.idView.text = item.id
-    holder.contentView.text = item.content
+    holder.contentView.text = item.userName
 
     with(holder.itemView) {
       tag = item
@@ -41,7 +41,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
 
   override fun getItemCount() = items.size
 
-  fun setItems(items: List<PlaceholderItem>) {
+  fun setItems(items: List<PixaBayItem>) {
     this.items.clear()
     this.items.addAll(items)
     submitList(this.items) { notifyDataSetChanged() }

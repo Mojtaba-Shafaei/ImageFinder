@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.shafaei.imageFinder.databinding.FragmentItemListBinding
+import com.shafaei.imageFinder.placeholder.PixaBayItem
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -65,7 +66,7 @@ class ItemListFragment : Fragment() {
     mDisposables +=
        mAdapter.clicks
           .subscribe { itemView ->
-            val item = itemView.tag as PlaceholderContent.PlaceholderItem
+            val item = itemView.tag as PixaBayItem
             val bundle = Bundle()
             bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
             if (itemDetailFragmentContainer != null) {

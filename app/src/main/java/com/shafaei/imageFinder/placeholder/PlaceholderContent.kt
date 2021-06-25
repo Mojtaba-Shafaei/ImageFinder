@@ -13,12 +13,12 @@ object PlaceholderContent {
   /**
    * An array of sample (placeholder) items.
    */
-  val ITEMS: MutableList<PlaceholderItem> = ArrayList()
+  val ITEMS: MutableList<PixaBayItem> = ArrayList()
 
   /**
    * A map of sample (placeholder) items, by ID.
    */
-  val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
+  val ITEM_MAP: MutableMap<String, PixaBayItem> = HashMap()
 
   private val COUNT = 25
 
@@ -29,28 +29,12 @@ object PlaceholderContent {
     }
   }
 
-  private fun addItem(item: PlaceholderItem) {
+  private fun addItem(item: PixaBayItem) {
     ITEMS.add(item)
     ITEM_MAP.put(item.id, item)
   }
 
-  private fun createPlaceholderItem(position: Int): PlaceholderItem {
-    return PlaceholderItem(position.toString(), "Item " + position, makeDetails(position))
-  }
-
-  private fun makeDetails(position: Int): String {
-    val builder = StringBuilder()
-    builder.append("Details about Item: ").append(position)
-    for (i in 0..position - 1) {
-      builder.append("\nMore details information here.")
-    }
-    return builder.toString()
-  }
-
-  /**
-   * A placeholder item representing a piece of content.
-   */
-  data class PlaceholderItem(val id: String, val content: String, val details: String) {
-    override fun toString(): String = content
+  private fun createPlaceholderItem(position: Int): PixaBayItem {
+    return PixaBayItem(id = position.toString(), imageUrl = "https://pixabay.com/get/ga619bfedff2a069d72969cb64ec375111e442a219bd6f145e049d91d6a745cc0e0a3d05c686d4db195ed43486cf4a903fd959a632a9806f80d6adbeb9d48ef72_1280.jpg", imagePreviewUrl = "", userName = "bichnguyenvo", tagList = listOf<String>("sunflower", "nature", "flora"))
   }
 }
