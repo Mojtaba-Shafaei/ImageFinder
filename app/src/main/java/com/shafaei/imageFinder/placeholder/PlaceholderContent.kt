@@ -35,6 +35,15 @@ object PlaceholderContent {
   }
 
   private fun createPlaceholderItem(position: Int): PixaBayItem {
-    return PixaBayItem(id = position.toString(), imageUrl = "https://pixabay.com/get/ga619bfedff2a069d72969cb64ec375111e442a219bd6f145e049d91d6a745cc0e0a3d05c686d4db195ed43486cf4a903fd959a632a9806f80d6adbeb9d48ef72_1280.jpg", imagePreviewUrl = "", userName = "bichnguyenvo", tagList = listOf<String>("sunflower", "nature", "flora"))
+    return PixaBayItem(
+       id = position.toString(),
+       imageUrl = "https://pixabay.com/get/ga619bfedff2a069d72969cb64ec375111e442a219bd6f145e049d91d6a745cc0e0a3d05c686d4db195ed43486cf4a903fd959a632a9806f80d6adbeb9d48ef72_1280.jpg",
+       imagePreviewUrl = "https://cdn.pixabay.com/photo/2018/01/28/11/24/sunflower-3113318_150.jpg",
+       userName = "bichnguyenvo",
+       tagList = listOf<String>("sunflower", "nature", "flora"),
+       likes = 11,
+       favorites = 12,
+       comments = 14,
+    )
   }
 }

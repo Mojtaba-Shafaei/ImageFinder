@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -38,6 +39,7 @@ android {
 dependencies {
     def rxBinding = "3.1.0"
     def retrofit = "2.9.0"
+    def glide_version = "4.11.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.5.0'
@@ -68,5 +70,9 @@ dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.1"))
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+
+    implementation("com.github.bumptech.glide:glide:${glide_version}")
+    kapt("com.github.bumptech.glide:compiler:${glide_version}")
+
 
 }

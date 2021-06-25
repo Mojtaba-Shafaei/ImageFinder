@@ -1,11 +1,12 @@
 package com.shafaei.imageFinder
 
 import android.view.*
-import android.widget.TextView
 import androidx.recyclerview.widget.*
 import com.shafaei.imageFinder.SimpleItemRecyclerViewAdapter.ViewHolder
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
 import com.shafaei.imageFinder.placeholder.PixaBayItem
+import com.shafaei.imageFinder.utils.GlideApp
+import com.shafaei.imageFinder.utils.GlideAppModule
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -30,9 +31,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val item = items[position]
-    holder.idView.text = item.id
-    holder.contentView.text = item.userName
-
+    holder.initWith(item)
     with(holder.itemView) {
       tag = item
       setOnClickListener { mClicks.onNext(this) }
@@ -47,9 +46,17 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     submitList(this.items) { notifyDataSetChanged() }
   }
 
-  inner class ViewHolder(binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
-    val idView: TextView = binding.idText
-    val contentView: TextView = binding.content
+  inner class ViewHolder(private val binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun initWith(item: PixaBayItem) {
+      GlideApp.with(binding.ivThumbnail)
+         .load("https://cdn.pixabay.com/photo/2018/01/28/11/24/sunflower-3113318_150.jpg")
+         .apply(GlideAppModule.sharpCornersRequestOptions)
+         .into(binding.ivThumbnail)
+
+      binding.tvUserName.text = item.userName
+      binding.tvTagList.text = item.tagList.joinToString()
+    }
+
   }
 
 }

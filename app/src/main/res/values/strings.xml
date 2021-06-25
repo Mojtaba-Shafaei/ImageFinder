@@ -1,4 +1,5 @@
 <resources>
  <string name="app_name">ImageFinder</string>
  <string name="title_item_detail">Item Detail</string>
+ <string name="the_thumbnail_of_image">The Thumbnail of image</string>
 </resources>
