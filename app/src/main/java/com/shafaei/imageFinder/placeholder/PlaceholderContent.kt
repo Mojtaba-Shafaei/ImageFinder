@@ -1,7 +1,6 @@
 package com.shafaei.imageFinder.placeholder
 
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -25,7 +24,7 @@ object PlaceholderContent {
 
   init {
     // Add some sample items.
-    for (i in 1 .. COUNT) {
+    for (i in 1..COUNT) {
       addItem(createPlaceholderItem(i))
     }
   }
@@ -42,7 +41,7 @@ object PlaceholderContent {
   private fun makeDetails(position: Int): String {
     val builder = StringBuilder()
     builder.append("Details about Item: ").append(position)
-    for (i in 0 .. position - 1) {
+    for (i in 0..position - 1) {
       builder.append("\nMore details information here.")
     }
     return builder.toString()

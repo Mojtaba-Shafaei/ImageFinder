@@ -1,14 +1,13 @@
 package com.shafaei.imageFinder
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.shafaei.imageFinder.placeholder.PlaceholderContent
+import androidx.fragment.app.Fragment
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
+import com.shafaei.imageFinder.placeholder.PlaceholderContent
 
 /**
  * A fragment representing a single Item detail screen.
@@ -45,8 +44,8 @@ class ItemDetailFragment : Fragment() {
   }
 
   override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
+     inflater: LayoutInflater, container: ViewGroup?,
+     savedInstanceState: Bundle?,
   ): View? {
 
     _binding = FragmentItemDetailBinding.inflate(inflater, container, false)

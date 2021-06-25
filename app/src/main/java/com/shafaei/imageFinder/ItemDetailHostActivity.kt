@@ -27,7 +27,6 @@ class ItemDetailHostActivity : AppCompatActivity() {
 
   override fun onSupportNavigateUp(): Boolean {
     val navController = findNavController(R.id.nav_host_fragment_item_detail)
-    return navController.navigateUp(appBarConfiguration)
-      || super.onSupportNavigateUp()
+    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
   }
 }
