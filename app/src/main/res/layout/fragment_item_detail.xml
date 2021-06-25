@@ -1,63 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/item_detail_container"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ItemDetailHostActivity"
-  tools:ignore="MergeRootFrame">
+  android:background="@color/grey050"
+  android:paddingTop="8dp">
 
- <com.google.android.material.appbar.AppBarLayout
-   android:id="@+id/app_bar"
-   android:layout_width="match_parent"
-   android:layout_height="@dimen/app_bar_height"
-   android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-  <com.google.android.material.appbar.CollapsingToolbarLayout
-    android:id="@+id/toolbar_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:contentScrim="?attr/colorPrimary"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    app:toolbarId="@+id/toolbar">
-
-   <androidx.appcompat.widget.Toolbar
-     android:id="@+id/detail_toolbar"
-     android:layout_width="match_parent"
-     android:layout_height="?attr/actionBarSize"
-     app:layout_collapseMode="pin"
-     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-  </com.google.android.material.appbar.CollapsingToolbarLayout>
-
- </com.google.android.material.appbar.AppBarLayout>
-
- <androidx.core.widget.NestedScrollView
-   android:id="@+id/item_detail_scroll_view"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-  <TextView
-    android:id="@+id/item_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context="com.shafaei.imageFinder.ItemDetailFragment" />
-
- </androidx.core.widget.NestedScrollView>
-
- <com.google.android.material.floatingactionbutton.FloatingActionButton
-   android:id="@+id/fab"
+ <TextView
+   android:id="@+id/tvUserName"
    android:layout_width="wrap_content"
    android:layout_height="wrap_content"
-   android:layout_gravity="center_vertical|start"
-   android:layout_margin="@dimen/fab_margin"
-   app:layout_anchor="@+id/item_detail_scroll_view"
-   app:layout_anchorGravity="top|end"
-   app:srcCompat="@android:drawable/stat_notify_chat" />
+   android:layout_marginStart="@dimen/container_margin"
+   android:layout_marginEnd="@dimen/container_margin"
+   android:drawablePadding="@dimen/text_drawable_padding"
+   android:gravity="start|center_vertical"
+   android:textAppearance="@style/TextAppearance.AppCompat.Title"
+   app:drawableStartCompat="@drawable/baseline_person_white_36dp"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toTopOf="parent"
+   tools:text="@tools:sample/full_names" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+ <com.google.android.material.chip.ChipGroup
+   android:id="@+id/tagList"
+   android:layout_width="0dp"
+   android:layout_height="wrap_content"
+   android:paddingStart="16dp"
+   android:paddingEnd="16dp"
+   app:chipSpacingHorizontal="4dp"
+   app:chipSpacingVertical="4dp"
+   app:layout_constraintEnd_toEndOf="parent"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toBottomOf="@id/tvUserName" />
+
+ <TextView
+   android:id="@+id/tvLikes"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_marginStart="@dimen/container_margin"
+   android:layout_marginTop="8dp"
+   android:drawablePadding="@dimen/text_drawable_padding"
+   android:gravity="center"
+   android:textAppearance="@android:style/TextAppearance.Small"
+   app:drawableStartCompat="@drawable/baseline_thumb_up_grey_24dp"
+   app:layout_constraintEnd_toStartOf="@+id/tvFavorites"
+   app:layout_constraintHorizontal_chainStyle="spread_inside"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toBottomOf="@id/tagList"
+   tools:text="101" />
+
+ <TextView
+   android:id="@+id/tvFavorites"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:drawablePadding="@dimen/text_drawable_padding"
+   android:gravity="center"
+   android:textAppearance="@android:style/TextAppearance.Small"
+   app:drawableStartCompat="@drawable/baseline_favorite_grey_24dp"
+   app:layout_constraintEnd_toStartOf="@+id/tvComments"
+   app:layout_constraintHorizontal_chainStyle="spread"
+   app:layout_constraintStart_toEndOf="@+id/tvLikes"
+   app:layout_constraintTop_toTopOf="@id/tvLikes"
+   tools:text="1041" />
+
+ <TextView
+   android:id="@+id/tvComments"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_marginEnd="@dimen/container_margin"
+   android:drawablePadding="@dimen/text_drawable_padding"
+   android:gravity="center"
+   android:textAppearance="@android:style/TextAppearance.Small"
+   app:drawableStartCompat="@drawable/baseline_comment_grey_24dp"
+   app:layout_constraintEnd_toEndOf="parent"
+   app:layout_constraintHorizontal_chainStyle="spread_inside"
+   app:layout_constraintStart_toEndOf="@+id/tvFavorites"
+   app:layout_constraintTop_toTopOf="@id/tvLikes"
+   tools:text="876" />
+
+ <androidx.constraintlayout.widget.Barrier
+   android:id="@+id/barrier2"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   app:barrierDirection="bottom"
+   app:constraint_referenced_ids="tvComments,tvFavorites,tvLikes" />
+
+
+ <com.github.chrisbanes.photoview.PhotoView
+   android:id="@+id/ivLarge"
+   android:layout_width="match_parent"
+   android:layout_height="0dp"
+   android:layout_marginTop="8dp"
+   android:contentDescription="@string/image_full_size"
+   android:minHeight="1000dp"
+   android:scaleType="fitStart"
+   android:translationZ="5dp"
+   app:layout_constraintBottom_toBottomOf="parent"
+   app:layout_constraintTop_toBottomOf="@id/barrier2"
+   tools:context="com.shafaei.imageFinder.ItemDetailFragment" />
+</androidx.constraintlayout.widget.ConstraintLayout>

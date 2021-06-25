@@ -36,7 +36,7 @@ class GlideAppModule : AppGlideModule() {
          .format(DecodeFormat.PREFER_RGB_565)
          .timeout(30000)
          .signature(last24HourStringSignature)
-         .centerInside()
+         //.centerInside()
     }
 
     val rounded4dipRequestOptions: RequestOptions by lazy {

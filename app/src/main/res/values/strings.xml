@@ -5,4 +5,5 @@
  <string name="yes_display">Yes, Display it!</string>
  <string name="do_you_want_to_see_detail">Do You Want to See Detail?</string>
  <string name="confirmation">Confirmation</string>
+ <string name="image_full_size">The Full Size Image</string>
 </resources>

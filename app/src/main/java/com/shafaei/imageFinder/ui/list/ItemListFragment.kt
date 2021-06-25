@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder
+package com.shafaei.imageFinder.ui.list
 
 import android.os.Bundle
 import android.view.*
@@ -7,8 +7,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.shafaei.imageFinder.*
 import com.shafaei.imageFinder.databinding.FragmentItemListBinding
-import com.shafaei.imageFinder.placeholder.PixaBayItem
+import com.shafaei.imageFinder.bussinessLogic.local.ImageListItem
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -73,7 +74,7 @@ class ItemListFragment : Fragment() {
                .setTitle(R.string.confirmation)
                .setMessage(R.string.do_you_want_to_see_detail)
                .setPositiveButton(R.string.yes_display) { _, _ ->
-                 val item = itemView.tag as PixaBayItem
+                 val item = itemView.tag as ImageListItem
                  val bundle = bundleOf(ItemDetailFragment.ARG_ITEM_ID to item.id)
                  if (itemDetailFragmentContainer != null) {
                    itemDetailFragmentContainer!!.findNavController().navigate(R.id.fragment_item_detail, bundle)

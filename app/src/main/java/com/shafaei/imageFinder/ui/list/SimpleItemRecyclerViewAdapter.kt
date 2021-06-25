@@ -1,25 +1,25 @@
-package com.shafaei.imageFinder
+package com.shafaei.imageFinder.ui.list
 
 import android.view.*
 import androidx.recyclerview.widget.*
-import com.shafaei.imageFinder.SimpleItemRecyclerViewAdapter.ViewHolder
+import com.shafaei.imageFinder.ui.list.SimpleItemRecyclerViewAdapter.ViewHolder
+import com.shafaei.imageFinder.bussinessLogic.local.ImageListItem
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
-import com.shafaei.imageFinder.placeholder.PixaBayItem
 import com.shafaei.imageFinder.utils.GlideApp
 import com.shafaei.imageFinder.utils.GlideAppModule
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<PixaBayItem, ViewHolder>(object : DiffUtil.ItemCallback<PixaBayItem>() {
-  override fun areItemsTheSame(oldItem: PixaBayItem, newItem: PixaBayItem): Boolean {
+class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<ImageListItem, ViewHolder>(object : DiffUtil.ItemCallback<ImageListItem>() {
+  override fun areItemsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
     return (oldItem.id == newItem.id)
   }
 
-  override fun areContentsTheSame(oldItem: PixaBayItem, newItem: PixaBayItem): Boolean {
+  override fun areContentsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
     return (oldItem == newItem)
   }
 }) {
-  private val items: MutableList<PixaBayItem> = ArrayList()
+  private val items: MutableList<ImageListItem> = ArrayList()
 
   private val mClicks: PublishSubject<View> = PublishSubject.create()
   val clicks: Observable<View> = mClicks
@@ -40,21 +40,21 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
 
   override fun getItemCount() = items.size
 
-  fun setItems(items: List<PixaBayItem>) {
+  fun setItems(items: List<ImageListItem>) {
     this.items.clear()
     this.items.addAll(items)
     submitList(this.items) { notifyDataSetChanged() }
   }
 
   inner class ViewHolder(private val binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun initWith(item: PixaBayItem) {
+    fun initWith(item: ImageListItem) {
       GlideApp.with(binding.ivThumbnail)
-         .load("https://cdn.pixabay.com/photo/2018/01/28/11/24/sunflower-3113318_150.jpg")
+         .load(item.imagePreviewUrl)
          .apply(GlideAppModule.sharpCornersRequestOptions)
          .into(binding.ivThumbnail)
 
       binding.tvUserName.text = item.userName
-      binding.tvTagList.text = item.tagList.joinToString()
+      binding.tvTagList.text = item.tagList
     }
 
   }

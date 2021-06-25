@@ -7,8 +7,8 @@
 
  <fragment
    android:id="@+id/item_list_fragment"
-   android:name="com.shafaei.imageFinder.ItemListFragment"
-   android:label="ItemListFragment">
+   android:name="com.shafaei.imageFinder.ui.list.ItemListFragment"
+   android:label="Search Images">
   <action
     android:id="@+id/show_item_detail"
     app:destination="@id/item_detail_fragment" />
@@ -16,7 +16,7 @@
  <fragment
    android:id="@+id/item_detail_fragment"
    android:name="com.shafaei.imageFinder.ItemDetailFragment"
-   android:label="item_detail"
+   android:label="Image Detail"
    tools:layout="@layout/fragment_item_detail">
   <argument
     android:name="item_id"

@@ -1,26 +1,32 @@
 package com.shafaei.imageFinder.placeholder
 
+import com.shafaei.imageFinder.bussinessLogic.local.ImageDetailItem
+import com.shafaei.imageFinder.bussinessLogic.local.ImageListItem
 import java.util.*
 
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
  *
- * TODO: Replace all uses of this class before publishing your app.
  */
 object PlaceholderContent {
 
   /**
-   * An array of sample (placeholder) items.
+   * An array of sample (ImageList) items.
    */
-  val ITEMS: MutableList<PixaBayItem> = ArrayList()
+  val ITEMS: MutableList<ImageListItem> = ArrayList()
 
   /**
    * A map of sample (placeholder) items, by ID.
    */
-  val ITEM_MAP: MutableMap<String, PixaBayItem> = HashMap()
+  val ITEM_MAP: MutableMap<String, ImageListItem> = HashMap()
 
   private val COUNT = 25
+
+  val ITEM: ImageDetailItem = ImageDetailItem(id = "2295434", imageUrl = "https://pixabay.com/get/g4ef24a92f252ca3e37696534877219b1c49a571f0bcf6b930dfa288108aa4fff723369d0418c201817df7c2976e5b1cde665d0e9b9fe1a844bb9774d650bbc7e_1280.jpg",
+     userName = "JillWellington",
+     tagList = listOf("spring bird", "bird", "tit"),
+     likes = 1508, favorites = 1542, comments = 164)
 
   init {
     // Add some sample items.
@@ -29,21 +35,17 @@ object PlaceholderContent {
     }
   }
 
-  private fun addItem(item: PixaBayItem) {
+  private fun addItem(item: ImageListItem) {
     ITEMS.add(item)
     ITEM_MAP.put(item.id, item)
   }
 
-  private fun createPlaceholderItem(position: Int): PixaBayItem {
-    return PixaBayItem(
-       id = position.toString(),
-       imageUrl = "https://pixabay.com/get/ga619bfedff2a069d72969cb64ec375111e442a219bd6f145e049d91d6a745cc0e0a3d05c686d4db195ed43486cf4a903fd959a632a9806f80d6adbeb9d48ef72_1280.jpg",
+  private fun createPlaceholderItem(position: Int): ImageListItem {
+    return ImageListItem(
+       id = "2295434",
        imagePreviewUrl = "https://cdn.pixabay.com/photo/2018/01/28/11/24/sunflower-3113318_150.jpg",
-       userName = "bichnguyenvo",
-       tagList = listOf<String>("sunflower", "nature", "flora"),
-       likes = 11,
-       favorites = 12,
-       comments = 14,
+       userName = "Mojtaba Shafaei :)",
+       tagList = "sunflower, nature, flora",
     )
   }
 }
