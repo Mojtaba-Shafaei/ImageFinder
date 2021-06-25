@@ -2,4 +2,7 @@
  <string name="app_name">ImageFinder</string>
  <string name="title_item_detail">Item Detail</string>
  <string name="the_thumbnail_of_image">The Thumbnail of image</string>
+ <string name="yes_display">Yes, Display it!</string>
+ <string name="do_you_want_to_see_detail">Do You Want to See Detail?</string>
+ <string name="confirmation">Confirmation</string>
 </resources>

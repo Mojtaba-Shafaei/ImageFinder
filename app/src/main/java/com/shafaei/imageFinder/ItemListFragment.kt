@@ -2,6 +2,8 @@ package com.shafaei.imageFinder
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -66,14 +68,24 @@ class ItemListFragment : Fragment() {
     mDisposables +=
        mAdapter.clicks
           .subscribe { itemView ->
-            val item = itemView.tag as PixaBayItem
-            val bundle = Bundle()
-            bundle.putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
-            if (itemDetailFragmentContainer != null) {
-              itemDetailFragmentContainer!!.findNavController().navigate(R.id.fragment_item_detail, bundle)
-            } else {
-              itemView.findNavController().navigate(R.id.show_item_detail, bundle)
-            }
+            // show confirmation dialog
+            AlertDialog.Builder(requireContext())
+               .setTitle(R.string.confirmation)
+               .setMessage(R.string.do_you_want_to_see_detail)
+               .setPositiveButton(R.string.yes_display) { _, _ ->
+                 val item = itemView.tag as PixaBayItem
+                 val bundle = bundleOf(ItemDetailFragment.ARG_ITEM_ID to item.id)
+                 if (itemDetailFragmentContainer != null) {
+                   itemDetailFragmentContainer!!.findNavController().navigate(R.id.fragment_item_detail, bundle)
+                 } else {
+                   itemView.findNavController().navigate(R.id.show_item_detail, bundle)
+                 }
+               }
+               .setNegativeButton(android.R.string.cancel, null)
+               .setCancelable(true)
+               .create()
+               .apply { window?.attributes?.gravity = Gravity.BOTTOM }
+               .show()
           }
   }
 
