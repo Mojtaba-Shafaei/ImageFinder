@@ -4,15 +4,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/item_detail_container"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/grey050"
-  android:paddingTop="8dp">
+  android:layout_height="match_parent">
 
  <TextView
    android:id="@+id/tvUserName"
    android:layout_width="wrap_content"
    android:layout_height="wrap_content"
    android:layout_marginStart="@dimen/container_margin"
+   android:layout_marginTop="8dp"
    android:layout_marginEnd="@dimen/container_margin"
    android:drawablePadding="@dimen/text_drawable_padding"
    android:gravity="start|center_vertical"
@@ -86,7 +85,6 @@
    app:barrierDirection="bottom"
    app:constraint_referenced_ids="tvComments,tvFavorites,tvLikes" />
 
-
  <com.github.chrisbanes.photoview.PhotoView
    android:id="@+id/ivLarge"
    android:layout_width="match_parent"
@@ -99,4 +97,12 @@
    app:layout_constraintBottom_toBottomOf="parent"
    app:layout_constraintTop_toBottomOf="@id/barrier2"
    tools:context="com.shafaei.imageFinder.ui.detail.ItemDetailFragment" />
+
+ <com.mojtaba_shafaei.android.ErrorMessage
+   android:id="@+id/em"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:background="?attr/backgroundColor"
+   android:translationZ="10dp"
+   android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
