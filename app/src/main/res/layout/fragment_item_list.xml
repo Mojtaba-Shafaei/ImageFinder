@@ -6,14 +6,52 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+ <androidx.cardview.widget.CardView
+   android:id="@+id/cardViewOfSearchView"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:layout_alignParentTop="true"
+   android:layout_marginStart="@dimen/activity_horizontal_margin"
+   android:layout_marginTop="12dp"
+   android:layout_marginEnd="@dimen/activity_horizontal_margin"
+   app:cardCornerRadius="4dp"
+   app:cardElevation="4dp"
+   app:layout_constraintTop_toTopOf="parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+   <androidx.appcompat.widget.SearchView
+     android:id="@+id/search_view"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:background="@null"
+     android:imeOptions="flagNoExtractUi|actionSearch"
+     app:defaultQueryHint="Search Images..."
+     app:iconifiedByDefault="false"
+     app:queryBackground="@null" />
+
+   <androidx.core.widget.ContentLoadingProgressBar
+     android:id="@+id/prg_loading"
+     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_gravity="bottom"
+     android:indeterminate="true"
+     android:indeterminateBehavior="repeat"
+     android:visibility="gone" />
+  </LinearLayout>
+ </androidx.cardview.widget.CardView>
+
  <androidx.recyclerview.widget.RecyclerView
    android:id="@+id/item_list"
    android:name="com.shafaei.imageFinder.ItemListFragment"
    android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   android:layout_marginLeft="16dp"
-   android:layout_marginRight="16dp"
+   android:layout_height="0dp"
    app:layoutManager="LinearLayoutManager"
+   app:layout_constraintTop_toBottomOf="@id/cardViewOfSearchView"
    tools:context="com.shafaei.imageFinder.ui.ItemDetailHostActivity"
    tools:listitem="@layout/item_list_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

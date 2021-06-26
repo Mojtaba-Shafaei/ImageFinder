@@ -7,4 +7,5 @@
  <dimen name="container_margin">8dp</dimen>
  <dimen name="text_drawable_padding">8dp</dimen>
  <dimen name="detail_icons_size">24dp</dimen>
+ <dimen name="activity_horizontal_margin">16dp</dimen>
 </resources>
