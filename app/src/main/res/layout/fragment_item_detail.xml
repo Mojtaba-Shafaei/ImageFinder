@@ -98,5 +98,5 @@
    android:translationZ="5dp"
    app:layout_constraintBottom_toBottomOf="parent"
    app:layout_constraintTop_toBottomOf="@id/barrier2"
-   tools:context="com.shafaei.imageFinder.ItemDetailFragment" />
+   tools:context="com.shafaei.imageFinder.ui.detail.ItemDetailFragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>

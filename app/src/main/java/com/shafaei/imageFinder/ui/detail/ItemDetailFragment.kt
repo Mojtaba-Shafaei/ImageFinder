@@ -1,10 +1,11 @@
-package com.shafaei.imageFinder
+package com.shafaei.imageFinder.ui.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.google.android.material.chip.Chip
+import com.shafaei.imageFinder.R
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import com.shafaei.imageFinder.utils.GlideApp
@@ -13,7 +14,7 @@ import com.shafaei.imageFinder.utils.GlideAppModule
 
 /**
  * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItemListFragment]
+ * This fragment is either contained in a [com.shafaei.imageFinder.ui.list.ItemListFragment]
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
@@ -41,6 +42,7 @@ class ItemDetailFragment : Fragment() {
     return binding.root
   }
 
+  @SuppressLint("InflateParams")
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     // show mock data
     binding.tvUserName?.text = item.userName
@@ -59,8 +61,6 @@ class ItemDetailFragment : Fragment() {
       chip.text = tag
       binding.tagList?.addView(chip)
     }
-
-
   }
 
   override fun onDestroyView() {

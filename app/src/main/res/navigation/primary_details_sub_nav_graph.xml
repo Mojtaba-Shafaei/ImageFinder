@@ -6,7 +6,7 @@
   app:startDestination="@id/fragment_item_detail">
  <fragment
    android:id="@+id/fragment_item_detail"
-   android:name="com.shafaei.imageFinder.ItemDetailFragment"
+   android:name="com.shafaei.imageFinder.ui.detail.ItemDetailFragment"
    android:label="@string/title_item_detail"
    tools:layout="@layout/fragment_item_detail">
   <argument

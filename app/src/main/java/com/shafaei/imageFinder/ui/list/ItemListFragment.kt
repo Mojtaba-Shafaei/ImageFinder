@@ -11,6 +11,7 @@ import com.shafaei.imageFinder.*
 import com.shafaei.imageFinder.databinding.FragmentItemListBinding
 import com.shafaei.imageFinder.bussinessLogic.local.ImageListItem
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
+import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 

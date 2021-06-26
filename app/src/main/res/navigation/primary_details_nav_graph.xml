@@ -15,7 +15,7 @@
  </fragment>
  <fragment
    android:id="@+id/item_detail_fragment"
-   android:name="com.shafaei.imageFinder.ItemDetailFragment"
+   android:name="com.shafaei.imageFinder.ui.detail.ItemDetailFragment"
    android:label="Image Detail"
    tools:layout="@layout/fragment_item_detail">
   <argument
