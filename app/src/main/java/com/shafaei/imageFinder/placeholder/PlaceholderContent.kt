@@ -1,7 +1,7 @@
 package com.shafaei.imageFinder.placeholder
 
-import com.shafaei.imageFinder.bussinessLogic.local.ImageDetailItem
-import com.shafaei.imageFinder.bussinessLogic.local.ImageListItem
+import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageDetailItem
+import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
 import java.util.*
 
 /**

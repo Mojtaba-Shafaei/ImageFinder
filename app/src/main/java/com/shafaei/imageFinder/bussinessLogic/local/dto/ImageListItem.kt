@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder.bussinessLogic.local
+package com.shafaei.imageFinder.bussinessLogic.local.dto
 
 import com.shafaei.imageFinder.bussinessLogic.network.dto.NetworkImageListItem
 
