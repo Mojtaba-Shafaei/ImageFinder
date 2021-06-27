@@ -11,13 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
+import com.jakewharton.rxbinding3.recyclerview.scrollStateChanges
 import com.mojtaba_shafaei.android.ErrorMessage.State
 import com.shafaei.imageFinder.R
 import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.FragmentItemListBinding
 import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
-import com.shafaei.imageFinder.kotlinExt.mapToMyException
+import com.shafaei.imageFinder.kotlinExt.*
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -119,6 +120,18 @@ class ItemListFragment : Fragment() {
           .subscribe({
             mViewModel.search(it.toString())
           }, { showErrors(it) })
+
+    mDisposables +=
+       binding.itemList
+          .scrollStateChanges()
+          .filter { it == RecyclerView.SCROLL_STATE_IDLE }
+          .filter { binding.itemList.isReachedToTheLastItem(mAdapter.itemCount) }
+          .filter { !mAdapter.loadingMore }
+          .subscribe({
+            mAdapter.loadingMore = true
+            binding.itemList.smoothScrollToPosition(mAdapter.itemCount)
+          },
+             { showErrors(it) })
   }
 
   private fun bindStates() {
@@ -164,6 +177,7 @@ class ItemListFragment : Fragment() {
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {
+    recyclerView.init()
     recyclerView.adapter = mAdapter
   }
 

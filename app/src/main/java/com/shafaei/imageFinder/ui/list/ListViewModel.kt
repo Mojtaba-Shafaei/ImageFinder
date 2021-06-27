@@ -99,4 +99,8 @@ class ListViewModel : ViewModel() {
   fun search(query: String) {
     mSearches.onNext(LoadAction(page = 1, query = query))
   }
+
+  fun loadNextPage() {
+    mSearches.onNext(NextPageAction())
+  }
 }
