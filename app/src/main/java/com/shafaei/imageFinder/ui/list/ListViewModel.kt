@@ -7,12 +7,12 @@ import com.shafaei.imageFinder.bussinessLogic.network.NetworkImageBl
 import com.shafaei.imageFinder.bussinessLogic.network.RetrofitHelper
 import com.shafaei.imageFinder.bussinessLogic.network.service.ImageService
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
-import com.shafaei.imageFinder.kotlinExt.applyRetry3
 import com.shafaei.imageFinder.kotlinExt.mapToMyException
 import com.shafaei.imageFinder.ui.list.SearchAction.LoadAction
 import com.shafaei.imageFinder.ui.list.SearchAction.NextPageAction
 import com.shafaei.imageFinder.ui.list.SearchAction.RetryAction
 import com.shafaei.imageFinder.ui.models.ListUiParams
+import com.shafaei.imageFinder.utils.Constants.PAGE_SIZE
 import com.shafaei.imageFinder.utils.Lce
 import com.shafaei.imageFinder.utils.Result
 import io.reactivex.Observable
@@ -22,6 +22,7 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.atomic.AtomicReference
 
 class ListViewModel : ViewModel() {
   private val mDisposables = CompositeDisposable()
@@ -31,6 +32,8 @@ class ListViewModel : ViewModel() {
   val states: Observable<Lce<ListUiData>> = mStates.distinctUntilChanged()
 
   private val imageBl: NetworkImageBl by lazy { NetworkImageBl(imageService = RetrofitHelper.retrofit.create(ImageService::class.java)) }
+
+  private val items: AtomicReference<List<ImageListItem>> = AtomicReference(ArrayList())
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   init {
@@ -49,12 +52,19 @@ class ListViewModel : ViewModel() {
             }
           }
           .map { action -> action as LoadAction }
+          .doOnNext {
+            if (it.page == 1) {
+              items.set(ArrayList(PAGE_SIZE))
+            }
+          }
           .flatMap { loadAction ->
             imageBl.search(query = loadAction.query, page = loadAction.page)
                .map { result ->
                  if (result is Result.Success) {
-                   Lce.data(ListUiData(param = ListUiParams(page = loadAction.page, searchText = loadAction.query),
-                      result = result.data.map { ImageListItem.from(it) }))
+                   val allItems = items.get().toMutableList()
+                      .apply { addAll(result.data.map { ImageListItem.from(it) }) }
+                   items.set(allItems)
+                   Lce.data(ListUiData(param = ListUiParams(page = loadAction.page, searchText = loadAction.query), result = allItems))
                  } else {
                    Lce.error((result as Result.Failure).exception)
                  }
@@ -65,7 +75,7 @@ class ListViewModel : ViewModel() {
           }
           .retryWhen { errors ->
             errors.doOnNext {
-              Log.e("TAG","Main Stream got exception",it)
+              Log.e("TAG", "Main Stream got exception", it)
               mStates.onNext(Lce.error(it.mapToMyException()))
             }.map { false }
           }
