@@ -15,5 +15,6 @@ interface ImageService {
      @Query("q") query: String,
      @Query("page") page: String?,
      @Query("per_page") perPage: Int = PAGE_SIZE,
+     @Query("order") order: String = "latest",
   ): Single<Result<NetworkImageListResponse>>
 }

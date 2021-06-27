@@ -12,7 +12,6 @@ import com.shafaei.imageFinder.ui.list.SearchAction.LoadAction
 import com.shafaei.imageFinder.ui.list.SearchAction.NextPageAction
 import com.shafaei.imageFinder.ui.list.SearchAction.RetryAction
 import com.shafaei.imageFinder.ui.models.ListUiParams
-import com.shafaei.imageFinder.utils.Constants.PAGE_SIZE
 import com.shafaei.imageFinder.utils.Lce
 import com.shafaei.imageFinder.utils.Result
 import io.reactivex.Observable
@@ -22,7 +21,6 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.atomic.AtomicReference
 
 class ListViewModel : ViewModel() {
   private val mDisposables = CompositeDisposable()
@@ -33,7 +31,7 @@ class ListViewModel : ViewModel() {
 
   private val imageBl: NetworkImageBl by lazy { NetworkImageBl(imageService = RetrofitHelper.retrofit.create(ImageService::class.java)) }
 
-  private val items: AtomicReference<List<ImageListItem>> = AtomicReference(ArrayList())
+  private val items: MutableList<ImageListItem> = ArrayList()
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   init {
@@ -54,17 +52,15 @@ class ListViewModel : ViewModel() {
           .map { action -> action as LoadAction }
           .doOnNext {
             if (it.page == 1) {
-              items.set(ArrayList(PAGE_SIZE))
+              items.clear()
             }
           }
           .flatMap { loadAction ->
             imageBl.search(query = loadAction.query, page = loadAction.page)
                .map { result ->
                  if (result is Result.Success) {
-                   val allItems = items.get().toMutableList()
-                      .apply { addAll(result.data.map { ImageListItem.from(it) }) }
-                   items.set(allItems)
-                   Lce.data(ListUiData(param = ListUiParams(page = loadAction.page, searchText = loadAction.query), result = allItems))
+                   items.addAll(result.data.map { ImageListItem.from(it) })
+                   Lce.data(ListUiData(param = ListUiParams(page = loadAction.page, searchText = loadAction.query), result = items))
                  } else {
                    Lce.error((result as Result.Failure).exception)
                  }

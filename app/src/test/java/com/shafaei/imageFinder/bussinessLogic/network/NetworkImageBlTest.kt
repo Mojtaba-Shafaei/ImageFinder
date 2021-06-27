@@ -44,7 +44,7 @@ internal class NetworkImageBlTest {
   }
 
   @Test
-  fun search_YellowFlower_Page1AndPage2AreDifferent() {
+  fun `search_YellowFlower_Page1,2,3AreDifferent`() {
     val query = "Yellow Flower"
     val result1 = imageBl.search(query = query, page = 1)
        .subscribeOn(scheduler)
@@ -54,13 +54,24 @@ internal class NetworkImageBlTest {
        .subscribeOn(scheduler)
        .blockingGet()
 
+    val result3 = imageBl.search(query = query, page = 3)
+       .subscribeOn(scheduler)
+       .blockingGet()
+
     assertTrue(result1 is Success) { "Result page1 is Not Successful" }
     assertTrue(result2 is Success) { "Result page2 is Not Successful" }
+    assertTrue(result3 is Success) { "Result page3 is Not Successful" }
 
     val data1 = (result1 as Success).data
     val data2 = (result2 as Success).data
+    val data3 = (result3 as Success).data
 
     assertNotEquals(data1, data2)
-    assertTrue(data1.intersect(data2).isNullOrEmpty()) { "There Are The Same Item(s) in Both Pages" }
+    assertNotEquals(data1, data3)
+    assertNotEquals(data2, data3)
+
+    assertTrue(data1.intersect(data2).isNullOrEmpty()) { "There Are The Same Item(s) in Both Pages1,2" }
+    assertTrue(data2.intersect(data3).isNullOrEmpty()) { "There Are The Same Item(s) in Both Pages2,3" }
+    assertTrue(data1.intersect(data3).isNullOrEmpty()) { "There Are The Same Item(s) in Both Pages1,3" }
   }
 }

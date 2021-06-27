@@ -20,7 +20,10 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     return (oldItem == newItem)
   }
 }) {
-  private val items: MutableList<ImageListItem> = ArrayList()
+
+  init {
+    setHasStableIds(true)
+  }
 
   private val mClicks: PublishSubject<View> = PublishSubject.create()
   val clicks: Observable<View> = mClicks
@@ -29,9 +32,10 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     set(value) {
       field = value
       if (value) {
-        notifyItemInserted(itemCount)
+        // notifyItemInserted(itemCount)
+        notifyDataSetChanged()
       } else
-        notifyItemRemoved(itemCount)
+        notifyDataSetChanged()
     }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -42,9 +46,9 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     }
   }
 
-  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, _position: Int) {
     if (holder is ViewHolder) {
-      val item = items[position]
+      val item = getItem(holder.bindingAdapterPosition)
       holder.initWith(item)
       with(holder.itemView) {
         tag = item
@@ -53,10 +57,10 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     }
   }
 
-  override fun getItemCount() = items.size + (if (loadingMore) 1 else 0)
+  override fun getItemCount() = super.getItemCount() + (if (loadingMore) 1 else 0)
 
   override fun getItemId(position: Int): Long {
-    return getItem(position).id.toLong()
+    return if (getItemViewType(position) == LOADING.ordinal) -1 else getItem(position).id.toLong()
   }
 
   override fun getItemViewType(position: Int): Int {
@@ -64,9 +68,8 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
   }
 
   fun setItems(items: List<ImageListItem>) {
-    this.items.clear()
-    this.items.addAll(items)
-    submitList(this.items) { notifyDataSetChanged() }
+    submitList(items)
+    loadingMore = false
   }
 
   inner class ViewHolder(private val binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -82,7 +85,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
 
   }
 
-  inner class ViewHolderLoading(private val binding: LayoutLoadingMoreBinding) : RecyclerView.ViewHolder(binding.root)
+  inner class ViewHolderLoading(binding: LayoutLoadingMoreBinding) : RecyclerView.ViewHolder(binding.root)
 
   enum class ViewType {
     LOADING, DATA
