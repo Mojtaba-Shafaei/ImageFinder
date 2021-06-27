@@ -55,6 +55,20 @@
    tools:context="com.shafaei.imageFinder.ui.ItemDetailHostActivity"
    tools:listitem="@layout/item_list_content" />
 
+ <TextView
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:id="@+id/tvMessage"
+   android:visibility="gone"
+   android:layout_marginTop="16dp"
+   android:background="@drawable/shape_rect_pink"
+   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+   android:textColor="#E91E63"
+   app:layout_constraintEnd_toEndOf="parent"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toTopOf="@id/item_list"
+   tools:text="@string/not_found" />
+
  <com.mojtaba_shafaei.android.ErrorMessage
    android:id="@+id/em"
    android:layout_width="match_parent"

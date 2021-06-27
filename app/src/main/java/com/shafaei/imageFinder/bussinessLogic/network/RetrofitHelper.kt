@@ -20,9 +20,7 @@ object RetrofitHelper {
         .writeTimeout(30, SECONDS)
         .retryOnConnectionFailure(true)
 
-      val gson: Gson = GsonBuilder()
-        .excludeFieldsWithoutExposeAnnotation()
-        .create()
+      val gson: Gson = GsonBuilder().create()
 
       // prints Http requests and response into the Log
       if (BuildConfig.DEBUG) {
@@ -32,7 +30,7 @@ object RetrofitHelper {
       }
 
       return Retrofit.Builder()
-        .baseUrl("https://pixabay.com/api")
+        .baseUrl("https://pixabay.com")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(clientBuilder.build())

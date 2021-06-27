@@ -34,10 +34,7 @@ class ItemDetailFragment : Fragment() {
     imageId = requireArguments().getString(ARG_ITEM_ID) ?: throw IllegalArgumentException("Please Pass the ImageId as an argument to this Fragment")
   }
 
-  override fun onCreateView(
-     inflater: LayoutInflater, container: ViewGroup?,
-     savedInstanceState: Bundle?,
-  ): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
     return binding.root
   }

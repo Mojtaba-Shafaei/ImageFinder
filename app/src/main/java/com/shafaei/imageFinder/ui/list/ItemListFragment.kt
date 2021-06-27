@@ -1,19 +1,30 @@
 package com.shafaei.imageFinder.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.shafaei.imageFinder.*
-import com.shafaei.imageFinder.databinding.FragmentItemListBinding
+import com.jakewharton.rxbinding3.appcompat.queryTextChanges
+import com.mojtaba_shafaei.android.ErrorMessage.State
+import com.shafaei.imageFinder.R
 import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.databinding.FragmentItemListBinding
+import com.shafaei.imageFinder.exceptions.MyException
+import com.shafaei.imageFinder.exceptions.NoInternetException
+import com.shafaei.imageFinder.kotlinExt.mapToMyException
 import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -37,6 +48,8 @@ class ItemListFragment : Fragment() {
 
   // The detail fragment, if the layout is sw-600 it will be not-null
   private var itemDetailFragmentContainer: View? = null
+
+  private val mViewModel: ListViewModel by viewModels()
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   override fun onCreateView(
@@ -58,9 +71,14 @@ class ItemListFragment : Fragment() {
     itemDetailFragmentContainer = view.findViewById(R.id.item_detail_nav_container)
 
     setupRecyclerView(recyclerView)
-    bindClicks()
 
     mAdapter.setItems(PlaceholderContent.ITEMS)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    bindClicks()
+    bindStates()
   }
 
   private fun bindClicks() {
@@ -89,6 +107,60 @@ class ItemListFragment : Fragment() {
                .apply { window?.attributes?.gravity = Gravity.BOTTOM }
                .show()
           }
+
+    mDisposables +=
+       binding.searchView!!
+          .queryTextChanges()
+          .skipInitialValue()
+          .filter { it.length > 1 }
+          .throttleWithTimeout(1200, MILLISECONDS, Schedulers.io())
+          .distinctUntilChanged()
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            mViewModel.search(it.toString())
+          }, { showErrors(it) })
+  }
+
+  private fun bindStates() {
+    mDisposables +=
+       mViewModel.states
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            binding.prgLoading?.isVisible = it.isLoading
+
+            if (it.hasError()) {
+              showErrors(it.error!!)
+            }
+
+            if (it.data != null) {
+              mAdapter.setItems(it.data!!.result)
+
+              if (it.data!!.result.isEmpty()) {
+                binding.tvMessage?.isVisible = true
+                binding.tvMessage?.setText(R.string.not_found)
+              } else {
+                binding.tvMessage?.isVisible = false
+              }
+            }
+
+            if (!it.hasError()) {
+              binding.em?.state = State.hidden()
+            }
+          }, { showErrors(it) })
+  }
+
+  private fun showErrors(error: MyException) {
+    Log.e("TAG", "showErrors failed." + error.string(requireContext()))
+    if (error is NoInternetException) {
+      binding.em?.state = State.internetError { mViewModel.retry() }.copy(actionTitle = getString(R.string.retry), message = getString(R.string.no_internet_connection))
+    } else {
+      binding.em?.state = State.error(message = error.string(requireContext()), action = { mViewModel.retry() })
+         .copy(actionTitle = getString(R.string.retry))
+    }
+  }
+
+  private fun showErrors(error: Throwable) {
+    showErrors(error.mapToMyException())
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {

@@ -6,6 +6,7 @@ import com.shafaei.imageFinder.exceptions.ExceptionMapper
 import com.shafaei.imageFinder.utils.Result
 import com.shafaei.imageFinder.utils.Result.Success
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 class NetworkImageBl(private val imageService: ImageService) {
   fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
@@ -23,6 +24,6 @@ class NetworkImageBl(private val imageService: ImageService) {
            }
          }
          .onErrorReturn { t: Throwable -> Result.Failure(ExceptionMapper.map(t)) }
-    }
+    }.subscribeOn(Schedulers.io())
   }
 }

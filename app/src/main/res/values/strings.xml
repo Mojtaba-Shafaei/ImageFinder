@@ -8,4 +8,5 @@
  <string name="image_full_size">The Full Size Image</string>
  <string name="you_cannot_search_more">You Can Not Get More Result For This Search! Please Try Another Criteria.</string>
  <string name="unhandled_error">UnHandled Error Happened.</string>
+ <string name="not_found">Not Found!</string>
 </resources>
