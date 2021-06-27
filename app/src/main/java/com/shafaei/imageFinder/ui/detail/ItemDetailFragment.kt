@@ -6,10 +6,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import com.shafaei.imageFinder.R
+import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
-import com.shafaei.imageFinder.placeholder.PlaceholderContent
-import com.shafaei.imageFinder.utils.GlideApp
-import com.shafaei.imageFinder.utils.GlideAppModule
+import com.shafaei.imageFinder.utils.*
 
 
 /**
@@ -19,10 +18,9 @@ import com.shafaei.imageFinder.utils.GlideAppModule
  * on handsets.
  */
 class ItemDetailFragment : Fragment() {
-  private lateinit var imageId: String
   private var _binding: FragmentItemDetailBinding? = null
 
-  private val item by lazy { PlaceholderContent.ITEM }
+  private lateinit var item: ImageListItem
 
   // This property is only valid between onCreateView and
   // onDestroyView.
@@ -31,7 +29,7 @@ class ItemDetailFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     // The argument [ARG_ITEM_ID] is REQUIRED
-    imageId = requireArguments().getString(ARG_ITEM_ID) ?: throw IllegalArgumentException("Please Pass the ImageId as an argument to this Fragment")
+    item = requireArguments().getParcelable(ARG_ITEM) ?: throw IllegalArgumentException("Please Pass the Item as an argument to this Fragment")
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -50,6 +48,7 @@ class ItemDetailFragment : Fragment() {
     GlideApp.with(this)
        .load(item.imageUrl)
        .apply(GlideAppModule.sharpCornersRequestOptions)
+       .placeholder(AndroidUtil.createProgressDrawable(large = true))
        .into(binding.ivLarge)
 
     binding.tagList?.removeAllViews()
@@ -67,9 +66,9 @@ class ItemDetailFragment : Fragment() {
 
   companion object {
     /**
-     * The fragment argument representing the item ID that this fragment
+     * The fragment argument representing the item[ImageListItem] that this fragment
      * represents.
      */
-    const val ARG_ITEM_ID = "item_id"
+    const val ARG_ITEM = "item"
   }
 }

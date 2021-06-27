@@ -6,8 +6,7 @@ import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
 import com.shafaei.imageFinder.databinding.LayoutLoadingMoreBinding
 import com.shafaei.imageFinder.ui.list.SimpleItemRecyclerViewAdapter.ViewType.LOADING
-import com.shafaei.imageFinder.utils.GlideApp
-import com.shafaei.imageFinder.utils.GlideAppModule
+import com.shafaei.imageFinder.utils.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -77,10 +76,11 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
       GlideApp.with(binding.ivThumbnail)
          .load(item.imagePreviewUrl)
          .apply(GlideAppModule.sharpCornersRequestOptions)
+         .placeholder(AndroidUtil.createProgressDrawable())
          .into(binding.ivThumbnail)
 
       binding.tvUserName.text = item.userName
-      binding.tvTagList.text = item.tagList
+      binding.tvTagList.text = item.tagList.joinToString()
     }
 
   }

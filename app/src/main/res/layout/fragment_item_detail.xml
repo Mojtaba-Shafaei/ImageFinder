@@ -87,14 +87,16 @@
 
  <com.github.chrisbanes.photoview.PhotoView
    android:id="@+id/ivLarge"
-   android:layout_width="match_parent"
+   android:layout_width="0dp"
    android:layout_height="0dp"
    android:layout_marginTop="8dp"
    android:contentDescription="@string/image_full_size"
    android:minHeight="1000dp"
-   android:scaleType="fitStart"
+   android:scaleType="fitCenter"
    android:translationZ="5dp"
    app:layout_constraintBottom_toBottomOf="parent"
+   app:layout_constraintEnd_toEndOf="parent"
+   app:layout_constraintStart_toStartOf="parent"
    app:layout_constraintTop_toBottomOf="@id/barrier2"
    tools:context="com.shafaei.imageFinder.ui.detail.ItemDetailFragment" />
 

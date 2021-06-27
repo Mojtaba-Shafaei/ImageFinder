@@ -19,8 +19,7 @@
    android:label="Image Detail"
    tools:layout="@layout/fragment_item_detail">
   <argument
-    android:name="item_id"
-    android:defaultValue=""
-    app:argType="string" />
+    android:name="item"
+    app:argType="com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem" />
  </fragment>
 </navigation>

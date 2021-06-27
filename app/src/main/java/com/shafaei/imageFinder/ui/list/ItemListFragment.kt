@@ -72,14 +72,17 @@ class ItemListFragment : Fragment() {
     itemDetailFragmentContainer = view.findViewById(R.id.item_detail_nav_container)
 
     setupRecyclerView(recyclerView)
-
-    mAdapter.setItems(PlaceholderContent.ITEMS)
   }
 
   override fun onResume() {
     super.onResume()
     bindClicks()
     bindStates()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    mDisposables.clear()
   }
 
   private fun bindClicks() {
@@ -95,7 +98,7 @@ class ItemListFragment : Fragment() {
                .setMessage(R.string.do_you_want_to_see_detail)
                .setPositiveButton(R.string.yes_display) { _, _ ->
                  val item = itemView.tag as ImageListItem
-                 val bundle = bundleOf(ItemDetailFragment.ARG_ITEM_ID to item.id)
+                 val bundle = bundleOf(ItemDetailFragment.ARG_ITEM to item)
                  if (itemDetailFragmentContainer != null) {
                    itemDetailFragmentContainer!!.findNavController().navigate(R.id.fragment_item_detail, bundle)
                  } else {

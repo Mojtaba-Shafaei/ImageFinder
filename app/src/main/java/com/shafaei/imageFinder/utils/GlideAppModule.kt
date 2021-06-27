@@ -9,7 +9,6 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.MediaStoreSignature
@@ -36,21 +35,6 @@ class GlideAppModule : AppGlideModule() {
          .format(DecodeFormat.PREFER_RGB_565)
          .timeout(30000)
          .signature(last24HourStringSignature)
-         //.centerInside()
-    }
-
-    val rounded4dipRequestOptions: RequestOptions by lazy {
-      RequestOptions()
-         .centerInside()
-         .skipMemoryCache(true)
-         .error(R.drawable.baseline_error_outline_pink_200_24dp)
-         .diskCacheStrategy(DiskCacheStrategy.ALL)
-         .encodeFormat(Bitmap.CompressFormat.JPEG)
-         .encodeQuality(100)
-         .format(DecodeFormat.PREFER_RGB_565)
-         .timeout(30000)
-         .signature(last24HourStringSignature)
-         .transform(RoundedCorners(AndroidUtil.dpToPx(4).toInt()))
     }
 
     /**
