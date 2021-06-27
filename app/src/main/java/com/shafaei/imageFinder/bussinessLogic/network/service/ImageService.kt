@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface ImageService {
 
-  @GET("/api")
+  @GET("api")
   fun searchImages(
      @Query("key") key: String = "22232344-2a6d17f210567442d2c1d8ce4",
      @Query("q") query: String,

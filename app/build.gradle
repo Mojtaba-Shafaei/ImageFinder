@@ -38,7 +38,7 @@ android {
 
 dependencies {
     def rxBinding = "3.1.0"
-    def retrofit = "2.9.0"
+    def retrofit = "2.7.2"
     def glide_version = "4.12.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -51,7 +51,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    testImplementation 'junit:junit:4.+'
+
+    testImplementation('org.junit.jupiter:junit-jupiter:5.7.2')
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 

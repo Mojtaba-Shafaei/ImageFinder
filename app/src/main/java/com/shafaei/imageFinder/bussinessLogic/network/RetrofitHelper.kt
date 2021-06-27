@@ -30,7 +30,7 @@ object RetrofitHelper {
       }
 
       return Retrofit.Builder()
-        .baseUrl("https://pixabay.com")
+        .baseUrl("https://pixabay.com/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(clientBuilder.build())
