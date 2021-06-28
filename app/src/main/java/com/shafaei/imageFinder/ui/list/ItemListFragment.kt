@@ -133,7 +133,6 @@ class ItemListFragment : Fragment() {
           .filter { !mAdapter.loadingMore }
           .subscribe({
             mAdapter.loadingMore = true
-            binding.itemList.smoothScrollToPosition(mAdapter.itemCount)
             mViewModel.loadNextPage()
           },
              { showErrors(it) })
