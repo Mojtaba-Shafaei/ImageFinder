@@ -141,6 +141,18 @@ class ItemListFragment : Fragment() {
   private fun bindStates() {
     mDisposables +=
        mViewModel.states
+          .filter { it.data != null }
+          .map { it.data!! }
+          .take(1)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe {
+            if (binding.searchView.query.isBlank()) {
+              binding.searchView.setQuery(it.param.searchText, false)
+            }
+          }
+
+    mDisposables +=
+       mViewModel.states
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe({
             binding.prgLoading.isVisible = it.isLoading
@@ -151,7 +163,7 @@ class ItemListFragment : Fragment() {
 
             it.data?.run {
               mAdapter.setItems(this.result)
-              if (binding.searchView.query.isBlank()) {
+              if (binding.searchView.query.isBlank() && this.param.page > 1) {
                 binding.searchView.setQuery(this.param.searchText, false)
               }
 

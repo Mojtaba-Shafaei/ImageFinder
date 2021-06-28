@@ -28,7 +28,7 @@ class ListViewModel : ViewModel() {
   private val mSearches: PublishSubject<SearchAction> = PublishSubject.create()
 
   private val mStates: BehaviorSubject<Lce<ListUiData>> = BehaviorSubject.create()
-  val states: Observable<Lce<ListUiData>> = mStates.distinctUntilChanged()
+  val states: Observable<Lce<ListUiData>> = mStates.distinctUntilChanged().share()
 
   private val imageBl: NetworkImageBl by lazy { NetworkImageBl(imageService = RetrofitHelper.retrofit.create(ImageService::class.java)) }
 
