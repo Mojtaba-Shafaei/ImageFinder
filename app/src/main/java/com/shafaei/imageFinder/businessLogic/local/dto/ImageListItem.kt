@@ -11,9 +11,9 @@ data class ImageListItem(
    val userName: String,
    val tagList: List<String>,
    val imageUrl: String,
-   val likes: Int?,
-   val favorites: Int?,
-   val comments: Int?,
+   val likes: Int,
+   val favorites: Int,
+   val comments: Int,
 ) : Parcelable {
   companion object {
     fun from(nItem: NetworkImageListItem): ImageListItem {
@@ -23,9 +23,9 @@ data class ImageListItem(
          userName = nItem.userName,
          tagList = nItem.tagList.split(','),
          imageUrl = nItem.imageUrl,
-         likes = nItem.likes,
-         favorites = nItem.favorites,
-         comments = nItem.comments,
+         likes = nItem.likes ?: 0,
+         favorites = nItem.favorites ?: 0,
+         comments = nItem.comments ?: 0,
       )
     }
   }
