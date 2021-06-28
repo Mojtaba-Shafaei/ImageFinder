@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding3.appcompat.queryTextChangeEvents
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import com.jakewharton.rxbinding3.recyclerview.scrollStateChanges
 import com.mojtaba_shafaei.android.ErrorMessage.State
@@ -117,8 +116,8 @@ class ItemListFragment : Fragment() {
           .queryTextChanges()
           .skipInitialValue()
           .skip(1)
+          .map { it.toString().trim() }
           .filter { it.length > 1 }
-          .map { it.toString() }
           .throttleWithTimeout(1200, MILLISECONDS, Schedulers.io())
           .distinctUntilChanged()
           .observeOn(AndroidSchedulers.mainThread())
@@ -152,7 +151,7 @@ class ItemListFragment : Fragment() {
 
             it.data?.run {
               mAdapter.setItems(this.result)
-              if (!this.param.searchText.contentEquals(binding.searchView.query)) {
+              if (binding.searchView.query.isBlank()) {
                 binding.searchView.setQuery(this.param.searchText, false)
               }
 
