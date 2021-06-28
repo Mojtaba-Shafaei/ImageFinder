@@ -15,6 +15,7 @@ import com.shafaei.imageFinder.ui.models.ListUiParams
 import com.shafaei.imageFinder.utils.Lce
 import com.shafaei.imageFinder.utils.Result
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -37,8 +38,8 @@ class ListViewModel : ViewModel() {
   init {
     mDisposables +=
        mSearches
+          .mergeWith(Single.just(LoadAction(query = "fruits", page = 1))) //default action to search when application start
           .scan { old, new ->
-            Log.d("TAG", "old=$old, new=$new")
             when (new) {
               is RetryAction -> old as LoadAction
               is NextPageAction -> {

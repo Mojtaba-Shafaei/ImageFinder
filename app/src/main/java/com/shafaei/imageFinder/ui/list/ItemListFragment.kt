@@ -9,9 +9,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding3.appcompat.queryTextChanges
+import com.jakewharton.rxbinding3.appcompat.queryTextChangeEvents
 import com.jakewharton.rxbinding3.recyclerview.scrollStateChanges
 import com.mojtaba_shafaei.android.ErrorMessage.State
 import com.shafaei.imageFinder.R
@@ -21,7 +20,6 @@ import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.kotlinExt.*
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
-import com.shafaei.imageFinder.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -115,9 +113,10 @@ class ItemListFragment : Fragment() {
 
     mDisposables +=
        binding.searchView!!
-          .queryTextChanges()
+          .queryTextChangeEvents()
           .skipInitialValue()
-          .filter { it.length > 1 }
+          .filter { it.isSubmitted && it.queryText.length > 1 }
+          .map { it.queryText.toString() }
           .throttleWithTimeout(1200, MILLISECONDS, Schedulers.io())
           .distinctUntilChanged()
           .observeOn(AndroidSchedulers.mainThread())
@@ -149,10 +148,13 @@ class ItemListFragment : Fragment() {
               showErrors(it.error!!)
             }
 
-            if (it.data != null) {
-              mAdapter.setItems(it.data!!.result)
+            it.data?.run {
+              mAdapter.setItems(this.result)
+              if (!this.param.searchText.contentEquals(binding.searchView?.query)) {
+                binding.searchView?.setQuery(this.param.searchText, false)
+              }
 
-              if (it.data!!.result.isEmpty()) {
+              if (this.result.isEmpty()) {
                 binding.tvMessage?.isVisible = true
                 binding.tvMessage?.setText(R.string.not_found)
               } else {
