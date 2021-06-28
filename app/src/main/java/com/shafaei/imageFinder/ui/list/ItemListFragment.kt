@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import com.jakewharton.rxbinding3.recyclerview.scrollStateChanges
@@ -19,8 +20,8 @@ import com.shafaei.imageFinder.databinding.FragmentItemListBinding
 import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.kotlinExt.*
-import com.shafaei.imageFinder.placeholder.PlaceholderContent
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
+import com.shafaei.imageFinder.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign

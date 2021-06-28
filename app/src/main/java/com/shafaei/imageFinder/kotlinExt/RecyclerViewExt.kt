@@ -10,8 +10,9 @@ private fun RecyclerView.setVerticalLayoutManager() {
 }
 
 fun RecyclerView.isReachedToTheLastItem(totalItems: Int, threshold: Int = 5): Boolean {
-  val lastVisibleItemPosition = (this.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-  return if (lastVisibleItemPosition >= totalItems - threshold) {
+  val layoutManager = this.layoutManager as LinearLayoutManager
+  return if (totalItems > threshold &&
+     layoutManager.findLastVisibleItemPosition() >= (totalItems - threshold)) {
     Log.d("TAG", "LAST ITEM REACHED, totalItems = $totalItems, threshold = $threshold")
     true
   } else
