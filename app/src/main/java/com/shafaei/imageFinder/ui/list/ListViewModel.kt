@@ -2,10 +2,10 @@ package com.shafaei.imageFinder.ui.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
-import com.shafaei.imageFinder.bussinessLogic.network.NetworkImageBl
-import com.shafaei.imageFinder.bussinessLogic.network.RetrofitHelper
-import com.shafaei.imageFinder.bussinessLogic.network.service.ImageService
+import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.businessLogic.network.NetworkImageBl
+import com.shafaei.imageFinder.businessLogic.network.RetrofitHelper
+import com.shafaei.imageFinder.businessLogic.network.service.ImageService
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
 import com.shafaei.imageFinder.kotlinExt.mapToMyException
 import com.shafaei.imageFinder.ui.list.SearchAction.LoadAction

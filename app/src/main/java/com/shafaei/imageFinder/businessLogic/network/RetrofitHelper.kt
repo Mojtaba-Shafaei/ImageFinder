@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder.bussinessLogic.network
+package com.shafaei.imageFinder.businessLogic.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

@@ -1,7 +1,7 @@
-package com.shafaei.imageFinder.bussinessLogic.local.dto
+package com.shafaei.imageFinder.businessLogic.local.dto
 
 import android.os.Parcelable
-import com.shafaei.imageFinder.bussinessLogic.network.dto.NetworkImageListItem
+import com.shafaei.imageFinder.businessLogic.network.dto.NetworkImageListItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -5,18 +5,57 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+ <androidx.cardview.widget.CardView
+   android:id="@+id/cardViewOfSearchView"
+   android:layout_width="0dp"
+   android:layout_height="wrap_content"
+   android:layout_marginStart="@dimen/container_margin"
+   android:layout_marginTop="12dp"
+   app:cardCornerRadius="4dp"
+   app:cardElevation="4dp"
+   app:layout_constraintEnd_toStartOf="@id/guideline"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toTopOf="parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+   <androidx.appcompat.widget.SearchView
+     android:id="@+id/search_view"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:background="@null"
+     android:imeOptions="flagNoExtractUi|actionSearch"
+     app:defaultQueryHint="Search Images..."
+     app:iconifiedByDefault="false"
+     app:queryBackground="@null" />
+
+   <ProgressBar
+     android:id="@+id/prgLoading"
+     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_gravity="bottom"
+     android:indeterminate="true"
+     android:indeterminateBehavior="repeat"
+     android:visibility="gone" />
+  </LinearLayout>
+ </androidx.cardview.widget.CardView>
+
  <androidx.recyclerview.widget.RecyclerView
    android:id="@+id/item_list"
    android:name="com.shafaei.imageFinder.ItemListFragment"
    android:layout_width="0dp"
-   android:layout_height="match_parent"
+   android:layout_height="0dp"
    android:layout_marginStart="@dimen/container_margin"
    android:layout_marginEnd="@dimen/container_margin"
    app:layoutManager="LinearLayoutManager"
    app:layout_constraintBottom_toBottomOf="parent"
    app:layout_constraintEnd_toStartOf="@id/guideline"
    app:layout_constraintStart_toStartOf="parent"
-   app:layout_constraintTop_toTopOf="parent"
+   app:layout_constraintTop_toBottomOf="@id/cardViewOfSearchView"
    tools:context="com.shafaei.imageFinder.ui.ItemDetailHostActivity"
    tools:listitem="@layout/item_list_content" />
 
@@ -35,8 +74,32 @@
    android:layout_marginStart="@dimen/container_margin"
    app:defaultNavHost="false"
    app:layout_constraintBottom_toBottomOf="parent"
+   app:layout_constraintEnd_toEndOf="parent"
    app:layout_constraintStart_toEndOf="@id/guideline"
    app:layout_constraintTop_toTopOf="parent"
    app:navGraph="@navigation/primary_details_sub_nav_graph" />
+
+ <TextView
+   android:id="@+id/tvMessage"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_marginTop="16dp"
+   android:background="@drawable/shape_rect_pink"
+   android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+   android:textColor="#E91E63"
+   android:translationZ="10dp"
+   android:visibility="gone"
+   app:layout_constraintEnd_toEndOf="@id/item_detail_nav_container"
+   app:layout_constraintStart_toStartOf="@id/item_detail_nav_container"
+   app:layout_constraintTop_toTopOf="@id/item_detail_nav_container"
+   tools:text="@string/not_found" />
+
+ <com.mojtaba_shafaei.android.ErrorMessage
+   android:id="@+id/em"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:background="?attr/backgroundColor"
+   android:translationZ="10dp"
+   android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

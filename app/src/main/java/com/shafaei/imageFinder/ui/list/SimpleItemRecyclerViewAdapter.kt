@@ -2,7 +2,7 @@ package com.shafaei.imageFinder.ui.list
 
 import android.view.*
 import androidx.recyclerview.widget.*
-import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
 import com.shafaei.imageFinder.databinding.LayoutLoadingMoreBinding
 import com.shafaei.imageFinder.ui.list.SimpleItemRecyclerViewAdapter.ViewType.LOADING

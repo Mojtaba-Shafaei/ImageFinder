@@ -1,6 +1,6 @@
 package com.shafaei.imageFinder.placeholder
 
-import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import java.util.*
 
 /**

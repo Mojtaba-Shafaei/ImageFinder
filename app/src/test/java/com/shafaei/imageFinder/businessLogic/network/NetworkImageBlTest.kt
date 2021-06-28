@@ -1,6 +1,6 @@
-package com.shafaei.imageFinder.bussinessLogic.network
+package com.shafaei.imageFinder.businessLogic.network
 
-import com.shafaei.imageFinder.bussinessLogic.network.service.ImageService
+import com.shafaei.imageFinder.businessLogic.network.service.ImageService
 import com.shafaei.imageFinder.utils.Result.Success
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers

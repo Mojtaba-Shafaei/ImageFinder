@@ -11,10 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChangeEvents
+import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import com.jakewharton.rxbinding3.recyclerview.scrollStateChanges
 import com.mojtaba_shafaei.android.ErrorMessage.State
 import com.shafaei.imageFinder.R
-import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.FragmentItemListBinding
 import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
@@ -112,16 +113,17 @@ class ItemListFragment : Fragment() {
           }
 
     mDisposables +=
-       binding.searchView!!
-          .queryTextChangeEvents()
+       binding.searchView
+          .queryTextChanges()
           .skipInitialValue()
-          .filter { it.isSubmitted && it.queryText.length > 1 }
-          .map { it.queryText.toString() }
+          .skip(1)
+          .filter { it.length > 1 }
+          .map { it.toString() }
           .throttleWithTimeout(1200, MILLISECONDS, Schedulers.io())
           .distinctUntilChanged()
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe({
-            mViewModel.search(it.toString())
+            mViewModel.search(it)
           }, { showErrors(it) })
 
     mDisposables +=
@@ -142,7 +144,7 @@ class ItemListFragment : Fragment() {
        mViewModel.states
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe({
-            binding.prgLoading?.isVisible = it.isLoading
+            binding.prgLoading.isVisible = it.isLoading
 
             if (it.hasError()) {
               showErrors(it.error!!)
@@ -150,20 +152,20 @@ class ItemListFragment : Fragment() {
 
             it.data?.run {
               mAdapter.setItems(this.result)
-              if (!this.param.searchText.contentEquals(binding.searchView?.query)) {
-                binding.searchView?.setQuery(this.param.searchText, false)
+              if (!this.param.searchText.contentEquals(binding.searchView.query)) {
+                binding.searchView.setQuery(this.param.searchText, false)
               }
 
               if (this.result.isEmpty()) {
-                binding.tvMessage?.isVisible = true
-                binding.tvMessage?.setText(R.string.not_found)
+                binding.tvMessage.isVisible = true
+                binding.tvMessage.setText(R.string.not_found)
               } else {
-                binding.tvMessage?.isVisible = false
+                binding.tvMessage.isVisible = false
               }
             }
 
             if (!it.hasError()) {
-              binding.em?.state = State.hidden()
+              binding.em.state = State.hidden()
             }
           }, { showErrors(it) })
   }
@@ -171,9 +173,9 @@ class ItemListFragment : Fragment() {
   private fun showErrors(error: MyException) {
     Log.e("TAG", "showErrors failed." + error.string(requireContext()))
     if (error is NoInternetException) {
-      binding.em?.state = State.internetError { mViewModel.retry() }.copy(actionTitle = getString(R.string.retry), message = getString(R.string.no_internet_connection))
+      binding.em.state = State.internetError { mViewModel.retry() }.copy(actionTitle = getString(R.string.retry), message = getString(R.string.no_internet_connection))
     } else {
-      binding.em?.state = State.error(message = error.string(requireContext()), action = { mViewModel.retry() })
+      binding.em.state = State.error(message = error.string(requireContext()), action = { mViewModel.retry() })
          .copy(actionTitle = getString(R.string.retry))
     }
   }

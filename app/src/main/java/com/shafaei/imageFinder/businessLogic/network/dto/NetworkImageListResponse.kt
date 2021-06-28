@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder.bussinessLogic.network.dto
+package com.shafaei.imageFinder.businessLogic.network.dto
 
 import com.google.gson.annotations.SerializedName
 

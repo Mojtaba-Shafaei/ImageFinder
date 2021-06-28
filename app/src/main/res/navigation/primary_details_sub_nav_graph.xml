@@ -10,9 +10,10 @@
    android:label="@string/title_item_detail"
    tools:layout="@layout/fragment_item_detail">
   <argument
-    android:name="item_id"
-    android:defaultValue=""
-    app:argType="string" />
+    android:name="item"
+    app:argType="com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem"
+    app:nullable="true"
+    android:defaultValue="@null" />
  </fragment>
 
 </navigation>

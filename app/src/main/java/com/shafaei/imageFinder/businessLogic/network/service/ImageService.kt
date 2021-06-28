@@ -1,6 +1,6 @@
-package com.shafaei.imageFinder.bussinessLogic.network.service
+package com.shafaei.imageFinder.businessLogic.network.service
 
-import com.shafaei.imageFinder.bussinessLogic.network.dto.NetworkImageListResponse
+import com.shafaei.imageFinder.businessLogic.network.dto.NetworkImageListResponse
 import com.shafaei.imageFinder.utils.Constants.PAGE_SIZE
 import io.reactivex.Single
 import retrofit2.adapter.rxjava2.Result

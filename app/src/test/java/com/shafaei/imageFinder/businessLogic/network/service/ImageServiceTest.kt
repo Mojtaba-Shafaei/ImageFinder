@@ -1,7 +1,7 @@
-package com.shafaei.imageFinder.bussinessLogic.network.service
+package com.shafaei.imageFinder.businessLogic.network.service
 
 import com.google.gson.Gson
-import com.shafaei.imageFinder.bussinessLogic.network.RetrofitUtil
+import com.shafaei.imageFinder.businessLogic.network.RetrofitUtil
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockResponse

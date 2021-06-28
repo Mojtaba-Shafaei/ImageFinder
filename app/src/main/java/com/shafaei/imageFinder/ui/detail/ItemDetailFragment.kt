@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
+import com.mojtaba_shafaei.android.ErrorMessage
 import com.shafaei.imageFinder.R
-import com.shafaei.imageFinder.bussinessLogic.local.dto.ImageListItem
+import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
 import com.shafaei.imageFinder.utils.*
 
@@ -20,7 +21,7 @@ import com.shafaei.imageFinder.utils.*
 class ItemDetailFragment : Fragment() {
   private var _binding: FragmentItemDetailBinding? = null
 
-  private lateinit var item: ImageListItem
+  private var item: ImageListItem? = null
 
   // This property is only valid between onCreateView and
   // onDestroyView.
@@ -29,7 +30,7 @@ class ItemDetailFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     // The argument [ARG_ITEM_ID] is REQUIRED
-    item = requireArguments().getParcelable(ARG_ITEM) ?: throw IllegalArgumentException("Please Pass the Item as an argument to this Fragment")
+    item = requireArguments().getParcelable(ARG_ITEM)
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,23 +40,28 @@ class ItemDetailFragment : Fragment() {
 
   @SuppressLint("InflateParams")
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    // show mock data
-    binding.tvUserName?.text = item.userName
-    binding.tvLikes?.text = item.likes.toString()
-    binding.tvFavorites?.text = item.favorites.toString()
-    binding.tvComments?.text = item.comments.toString()
+    if (item != null) {
+      val data = item!!
+      binding.em2.state = ErrorMessage.State.hidden()
+      binding.tvUserName.text = data.userName
+      binding.tvLikes.text = data.likes.toString()
+      binding.tvFavorites.text = data.favorites.toString()
+      binding.tvComments.text = data.comments.toString()
 
-    GlideApp.with(this)
-       .load(item.imageUrl)
-       .apply(GlideAppModule.sharpCornersRequestOptions)
-       .placeholder(AndroidUtil.createProgressDrawable(large = true))
-       .into(binding.ivLarge)
+      GlideApp.with(this)
+         .load(data.imageUrl)
+         .apply(GlideAppModule.sharpCornersRequestOptions)
+         .placeholder(AndroidUtil.createProgressDrawable(large = true))
+         .into(binding.ivLarge)
 
-    binding.tagList?.removeAllViews()
-    item.tagList.forEach { tag ->
-      val chip = layoutInflater.inflate(R.layout.chip_item, null) as Chip
-      chip.text = tag
-      binding.tagList?.addView(chip)
+      binding.tagList.removeAllViews()
+      data.tagList.forEach { tag ->
+        val chip = layoutInflater.inflate(R.layout.chip_item, null) as Chip
+        chip.text = tag
+        binding.tagList.addView(chip)
+      }
+    } else {
+      binding.em2.state = ErrorMessage.State.noData().copy(message = getString(R.string.no_data))
     }
   }
 
