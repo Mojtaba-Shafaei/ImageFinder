@@ -20,11 +20,13 @@ import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.kotlinExt.*
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
+import javax.inject.Inject
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -34,7 +36,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  * item details. On larger screens, the Navigation controller presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-
+@AndroidEntryPoint
 class ItemListFragment : Fragment() {
 
   private var _binding: FragmentItemListBinding? = null

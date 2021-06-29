@@ -14,6 +14,7 @@ import com.shafaei.imageFinder.ui.list.SearchAction.RetryAction
 import com.shafaei.imageFinder.ui.models.ListUiParams
 import com.shafaei.imageFinder.utils.Lce
 import com.shafaei.imageFinder.utils.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,8 +23,10 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
-class ListViewModel : ViewModel() {
+@HiltViewModel
+class ListViewModel @Inject constructor() : ViewModel() {
   private val mDisposables = CompositeDisposable()
   private val mSearches: PublishSubject<SearchAction> = PublishSubject.create()
 
