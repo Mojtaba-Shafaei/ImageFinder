@@ -26,7 +26,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import javax.inject.Inject
 
 /**
  * A Fragment representing a list of Pings. This fragment

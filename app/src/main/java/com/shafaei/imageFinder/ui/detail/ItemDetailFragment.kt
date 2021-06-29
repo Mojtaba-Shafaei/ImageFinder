@@ -51,7 +51,7 @@ class ItemDetailFragment : Fragment() {
       GlideApp.with(this)
          .load(data.imageUrl)
          .apply(GlideAppModule.sharpCornersRequestOptions)
-         .placeholder(AndroidUtil.createProgressDrawable(large = true))
+         .placeholder(AndroidUtil.createProgressDrawable(this.requireContext(), large = true))
          .into(binding.ivLarge)
 
       binding.tagList.removeAllViews()

@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.businessLogic.network.NetworkImageBl
-import com.shafaei.imageFinder.businessLogic.network.RetrofitHelper
-import com.shafaei.imageFinder.businessLogic.network.service.ImageService
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
 import com.shafaei.imageFinder.kotlinExt.mapToMyException
 import com.shafaei.imageFinder.ui.list.SearchAction.LoadAction
@@ -26,14 +24,12 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor() : ViewModel() {
+class ListViewModel @Inject constructor(private val imageBl: NetworkImageBl) : ViewModel() {
   private val mDisposables = CompositeDisposable()
   private val mSearches: PublishSubject<SearchAction> = PublishSubject.create()
 
   private val mStates: BehaviorSubject<Lce<ListUiData>> = BehaviorSubject.create()
   val states: Observable<Lce<ListUiData>> = mStates.distinctUntilChanged().share()
-
-  private val imageBl: NetworkImageBl by lazy { NetworkImageBl(imageService = RetrofitHelper.retrofit.create(ImageService::class.java)) }
 
   private val items: MutableList<ImageListItem> = ArrayList()
 

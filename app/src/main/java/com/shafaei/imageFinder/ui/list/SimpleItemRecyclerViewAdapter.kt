@@ -76,7 +76,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
       GlideApp.with(binding.ivThumbnail)
          .load(item.imagePreviewUrl)
          .apply(GlideAppModule.sharpCornersRequestOptions)
-         .placeholder(AndroidUtil.createProgressDrawable())
+         .placeholder(AndroidUtil.createProgressDrawable(binding.ivThumbnail.context))
          .into(binding.ivThumbnail)
 
       binding.tvUserName.text = item.userName

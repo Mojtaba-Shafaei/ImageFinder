@@ -15,7 +15,7 @@ internal class NetworkImageBlTest {
   @BeforeEach
   fun setUp() {
     scheduler = Schedulers.single()
-    imageBl = NetworkImageBl(RetrofitHelper.retrofit.create(ImageService::class.java))
+  //todo  imageBl = NetworkImageBl(RetrofitHelper.retrofit.create(ImageService::class.java))
   }
 
   @AfterEach

@@ -7,8 +7,10 @@ import com.shafaei.imageFinder.utils.Result
 import com.shafaei.imageFinder.utils.Result.Success
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class NetworkImageBl(private val imageService: ImageService) {
+
+class NetworkImageBl @Inject constructor(private val imageService: ImageService) {
   fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
     return Single.defer {
       imageService.searchImages(

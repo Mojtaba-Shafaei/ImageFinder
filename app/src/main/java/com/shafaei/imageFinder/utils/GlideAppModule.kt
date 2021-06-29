@@ -36,17 +36,6 @@ class GlideAppModule : AppGlideModule() {
          .timeout(30000)
          .signature(last24HourStringSignature)
     }
-
-    /**
-     * Clear Glide's cache on background thread
-     */
-    fun clearCache(context: Context) {
-      Completable.create {
-        Glide.get(context.applicationContext).clearDiskCache()
-      }
-         .subscribeOn(Schedulers.io())
-         .subscribe()
-    }
   }
 
   ////////////
