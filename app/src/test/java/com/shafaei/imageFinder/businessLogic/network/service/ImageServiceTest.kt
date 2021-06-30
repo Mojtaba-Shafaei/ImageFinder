@@ -1,26 +1,25 @@
 package com.shafaei.imageFinder.businessLogic.network.service
 
+import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.shafaei.imageFinder.businessLogic.network.RetrofitUtil
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.TestInstance.Lifecycle
+import org.junit.*
 import retrofit2.Retrofit
 import retrofit2.Retrofit.Builder
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-@TestInstance(Lifecycle.PER_CLASS)
+// test convertors
 internal class ImageServiceTest {
   private val mockWebServer = MockWebServer()
   private lateinit var retrofit: Retrofit
   private lateinit var scheduler: Scheduler
 
-  @BeforeAll
+  @Before
   fun setUp() {
     scheduler = Schedulers.newThread()
 
@@ -41,8 +40,8 @@ internal class ImageServiceTest {
        .subscribeOn(scheduler)
        .blockingGet()
 
-    Assertions.assertTrue(RetrofitUtil.hasError(observer)) { "Response Has Error" }
-    Assertions.assertTrue(observer.response()!!.errorBody()!!.string().startsWith("[ERROR 400] Invalid or missing API key"))
+    assertThat(RetrofitUtil.hasError(observer)).isTrue()
+    assertThat(observer.response()!!.errorBody()!!.string()).startsWith("[ERROR 400] Invalid or missing API key")
   }
 
   @Test
@@ -55,9 +54,11 @@ internal class ImageServiceTest {
        .subscribeOn(scheduler)
        .blockingGet()
 
-    Assertions.assertFalse(RetrofitUtil.hasError(observer)) { "Response Has Error" }
-    Assertions.assertEquals(observer.response()?.body()?.total, 218948) { "Total is Not correct" }
-    Assertions.assertTrue(observer.response()?.body()?.hits?.count() ?: 0 > 0)
+    assertThat(RetrofitUtil.hasError(observer)).isFalse()
+    assertThat(observer.response()?.body()?.total).isEqualTo(218948)
+    val hits = observer.response()?.body()?.hits
+    assertThat(hits).isNotNull()
+    assertThat(hits!!).isNotEmpty()
   }
 
   @Test
@@ -70,9 +71,9 @@ internal class ImageServiceTest {
        .subscribeOn(scheduler)
        .blockingGet()
 
-    Assertions.assertFalse(RetrofitUtil.hasError(observer)) { "Response Has Error" }
-    Assertions.assertTrue(observer.response()!!.body()!!.total == 0) { "Total Must be 0" }
-    Assertions.assertTrue(observer.response()!!.body()!!.hits.count() == 0) { "Hits Must be an Empty List" }
+    assertThat(RetrofitUtil.hasError(observer)).isFalse()
+    assertThat(observer.response()!!.body()!!.total).isEqualTo(0)
+    assertThat(observer.response()!!.body()!!.hits).isEmpty()
   }
 
   @Test
@@ -85,11 +86,11 @@ internal class ImageServiceTest {
        .subscribeOn(scheduler)
        .blockingGet()
 
-    Assertions.assertTrue(RetrofitUtil.hasError(observer)) { "Response MUST have error 400, but it does not." }
+    assertThat(RetrofitUtil.hasError(observer)).isTrue()
   }
 
 
-  @AfterAll
+  @After
   fun afterAll() {
     mockWebServer.shutdown()
   }

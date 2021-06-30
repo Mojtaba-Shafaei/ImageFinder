@@ -1,21 +1,17 @@
 package com.shafaei.imageFinder.ui.list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.shafaei.imageFinder.businessLogic.ImageApi
 import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
-import com.shafaei.imageFinder.businessLogic.network.NetworkImageBl
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
 import com.shafaei.imageFinder.kotlinExt.mapToMyException
 import com.shafaei.imageFinder.ui.list.SearchAction.LoadAction
 import com.shafaei.imageFinder.ui.list.SearchAction.NextPageAction
 import com.shafaei.imageFinder.ui.list.SearchAction.RetryAction
 import com.shafaei.imageFinder.ui.models.ListUiParams
-import com.shafaei.imageFinder.utils.Lce
-import com.shafaei.imageFinder.utils.Result
+import com.shafaei.imageFinder.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +20,7 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(private val imageBl: NetworkImageBl) : ViewModel() {
+class ListViewModel @Inject constructor(var imageBl: ImageApi) : ViewModel() {
   private val mDisposables = CompositeDisposable()
   private val mSearches: PublishSubject<SearchAction> = PublishSubject.create()
 
@@ -37,7 +33,9 @@ class ListViewModel @Inject constructor(private val imageBl: NetworkImageBl) : V
   init {
     mDisposables +=
        mSearches
-          .mergeWith(Single.just(LoadAction(query = "fruits", page = 1))) //default action to search when application start
+          .observeOn(Schedulers.io())
+          .mergeWith(RxUtils.singleDelay(value = LoadAction(query = "fruits", page = 1)))
+          .distinctUntilChanged()
           .scan { old, new ->
             when (new) {
               is RetryAction -> old as LoadAction
@@ -59,7 +57,8 @@ class ListViewModel @Inject constructor(private val imageBl: NetworkImageBl) : V
             imageBl.search(query = loadAction.query, page = loadAction.page)
                .map { result ->
                  if (result is Result.Success) {
-                   items.addAll(result.data.map { ImageListItem.from(it) })
+                   val newItems: List<ImageListItem> = result.data.map { ImageListItem.from(it) }
+                   items.addAll(newItems)
                    Lce.data(ListUiData(param = ListUiParams(page = loadAction.page, searchText = loadAction.query), result = items))
                  } else {
                    Lce.error((result as Result.Failure).exception)
@@ -71,12 +70,11 @@ class ListViewModel @Inject constructor(private val imageBl: NetworkImageBl) : V
           }
           .retryWhen { errors ->
             errors.doOnNext {
-              Log.e("TAG", "Main Stream got exception", it)
               mStates.onNext(Lce.error(it.mapToMyException()))
             }.map { false }
           }
           .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
+          .observeOn(Schedulers.computation())
           .subscribe(
              {
                mStates.onNext(it)

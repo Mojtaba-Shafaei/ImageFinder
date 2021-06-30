@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.shafaei.imageFinder.R
 
 
-sealed class MyException(@StringRes val resId: Int) {
+sealed class MyException(@StringRes val resId: Int, val extraMessage: String? = null) {
   fun string(context: Context): String {
     return context.getString(resId)
   }
@@ -13,4 +13,6 @@ sealed class MyException(@StringRes val resId: Int) {
 
 class NoInternetException : MyException(R.string.no_internet_connection)
 class CanNotGetMoreResultException : MyException(R.string.you_cannot_search_more)
-class UnhandledException : MyException(R.string.unhandled_error)
+class UnhandledException(extraMessage: String? = null) : MyException(R.string.unhandled_error, extraMessage)
+class BlankQueryException : MyException(R.string.blank_query_exception)
+data class ShortQueryException(val len: Int) : MyException(R.string.short_query_exception)

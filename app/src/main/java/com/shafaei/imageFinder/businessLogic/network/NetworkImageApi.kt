@@ -1,5 +1,6 @@
 package com.shafaei.imageFinder.businessLogic.network
 
+import com.shafaei.imageFinder.businessLogic.ImageApi
 import com.shafaei.imageFinder.businessLogic.network.dto.NetworkImageListItem
 import com.shafaei.imageFinder.businessLogic.network.service.ImageService
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
@@ -10,8 +11,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class NetworkImageBl @Inject constructor(private val imageService: ImageService) {
-  fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
+class NetworkImageApi @Inject constructor(private val imageService: ImageService) : ImageApi {
+  override fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
     return Single.defer {
       imageService.searchImages(
          query = query,

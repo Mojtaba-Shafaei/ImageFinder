@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
@@ -20,6 +21,7 @@ import com.shafaei.imageFinder.exceptions.MyException
 import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.kotlinExt.*
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
+import com.shafaei.imageFinder.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -65,13 +67,19 @@ class ItemListFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val recyclerView: RecyclerView = binding.itemList
-
     // Leaving this not using view binding as it relies on if the view is visible the current
     // layout configuration (layout, layout-sw600dp)
     itemDetailFragmentContainer = view.findViewById(R.id.item_detail_nav_container)
+    //mViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+    initUi()
+  }
 
-    setupRecyclerView(recyclerView)
+  private fun initUi() {
+    binding.searchView.queryHint = getString(R.string.enter_n_chars_to_search).format(Constants.QUERY_MIN_LENGTH)
+    binding.itemList.run {
+      init()
+      adapter = mAdapter
+    }
   }
 
   override fun onResume() {
@@ -94,7 +102,7 @@ class ItemListFragment : Fragment() {
           .subscribe { itemView ->
             // show confirmation dialog
             AlertDialog.Builder(requireContext())
-               .setTitle(R.string.confirmation)
+               .setTitle(R.string.open_details)
                .setMessage(R.string.do_you_want_to_see_detail)
                .setPositiveButton(R.string.yes_display) { _, _ ->
                  val item = itemView.tag as ImageListItem
@@ -118,8 +126,8 @@ class ItemListFragment : Fragment() {
           .skipInitialValue()
           .skip(1)
           .map { it.toString().trim() }
-          .filter { it.length > 1 }
-          .throttleWithTimeout(1200, MILLISECONDS, Schedulers.io())
+          .filter { it.length >= Constants.QUERY_MIN_LENGTH }
+          .throttleWithTimeout(Constants.THROTTLE_TIME_OUT_SEARCH, MILLISECONDS, Schedulers.io())
           .distinctUntilChanged()
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe({
@@ -194,11 +202,6 @@ class ItemListFragment : Fragment() {
 
   private fun showErrors(error: Throwable) {
     showErrors(error.mapToMyException())
-  }
-
-  private fun setupRecyclerView(recyclerView: RecyclerView) {
-    recyclerView.init()
-    recyclerView.adapter = mAdapter
   }
 
   override fun onDestroyView() {
