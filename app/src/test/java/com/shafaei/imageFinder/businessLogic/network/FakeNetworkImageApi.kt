@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder.ui.list
+package com.shafaei.imageFinder.businessLogic.network
 
 import com.google.gson.Gson
 import com.shafaei.imageFinder.businessLogic.ImageApi
@@ -8,7 +8,7 @@ import com.shafaei.imageFinder.utils.GsonUtils
 import com.shafaei.imageFinder.utils.Result
 import io.reactivex.Single
 
-class FakeNetworkImageBl(private val shouldRaiseInternetException: Boolean = false) : ImageApi {
+class FakeNetworkImageApi(private val shouldRaiseInternetException: Boolean = false) : ImageApi {
   override fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
     return Single.defer {
       if (!shouldRaiseInternetException) {

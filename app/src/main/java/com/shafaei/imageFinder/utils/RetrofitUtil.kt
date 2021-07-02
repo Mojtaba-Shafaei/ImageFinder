@@ -1,4 +1,4 @@
-package com.shafaei.imageFinder.businessLogic.network
+package com.shafaei.imageFinder.utils
 
 import com.shafaei.imageFinder.exceptions.ExceptionMapper
 import com.shafaei.imageFinder.exceptions.MyException

@@ -1,6 +1,7 @@
 package com.shafaei.imageFinder.ui.list
 
 import com.google.common.truth.Truth.assertThat
+import com.shafaei.imageFinder.businessLogic.network.FakeNetworkImageApi
 import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.rx.ImmediateSchedulersRule
 import com.shafaei.imageFinder.utils.Constants
@@ -17,7 +18,7 @@ class ListViewModelTest {
 
   @Before
   fun setup() {
-    mViewModel = ListViewModel(FakeNetworkImageBl())
+    mViewModel = ListViewModel(FakeNetworkImageApi())
   }
 
   @Test
@@ -85,7 +86,7 @@ class ListViewModelTest {
 
   @Test
   fun `test internet is off, returns loadingAndException`() {
-    mViewModel = ListViewModel(FakeNetworkImageBl(true))
+    mViewModel = ListViewModel(FakeNetworkImageApi(true))
 
     val observer: TestObserver<Lce<ListUiData>> = TestObserver()
     mViewModel.states
@@ -127,7 +128,7 @@ class ListViewModelTest {
     observer.assertValueAt(0) { it.isLoading }
     observer.assertValueAt(1) { it.data != null }
 
-    mViewModel.imageBl = FakeNetworkImageBl(true)
+    mViewModel.imageBl = FakeNetworkImageApi(true)
     mViewModel.loadNextPage()
 
     observer.awaitCount(4)
@@ -140,7 +141,7 @@ class ListViewModelTest {
 
   @Test
   fun `test RetryLastAction when internet is off, returns NoInternetException`() {
-    mViewModel = ListViewModel(FakeNetworkImageBl(true))
+    mViewModel = ListViewModel(FakeNetworkImageApi(true))
 
     val observer: TestObserver<Lce<ListUiData>> = TestObserver()
     mViewModel.states

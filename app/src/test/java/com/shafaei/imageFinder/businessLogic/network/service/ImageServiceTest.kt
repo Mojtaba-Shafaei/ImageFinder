@@ -2,7 +2,7 @@ package com.shafaei.imageFinder.businessLogic.network.service
 
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
-import com.shafaei.imageFinder.businessLogic.network.RetrofitUtil
+import com.shafaei.imageFinder.utils.RetrofitUtil
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import okhttp3.mockwebserver.MockResponse
