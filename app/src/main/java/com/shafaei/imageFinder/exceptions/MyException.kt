@@ -16,3 +16,4 @@ class CanNotGetMoreResultException : MyException(R.string.you_cannot_search_more
 class UnhandledException(extraMessage: String? = null) : MyException(R.string.unhandled_error, extraMessage)
 class BlankQueryException : MyException(R.string.blank_query_exception)
 data class ShortQueryException(val len: Int) : MyException(R.string.short_query_exception)
+class MissedPixabayKeyException : MyException(R.string.missedPixabayKeyException)

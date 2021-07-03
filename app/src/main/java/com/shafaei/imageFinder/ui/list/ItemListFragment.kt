@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
@@ -195,6 +194,7 @@ class ItemListFragment : Fragment() {
     if (error is NoInternetException) {
       binding.em.state = State.internetError { mViewModel.retry() }.copy(actionTitle = getString(R.string.retry), message = getString(R.string.no_internet_connection))
     } else {
+      Log.e("ItemListFragment", "showErrors failed." + error.extraMessage)
       binding.em.state = State.error(message = error.string(requireContext()), action = { mViewModel.retry() })
          .copy(actionTitle = getString(R.string.retry))
     }
