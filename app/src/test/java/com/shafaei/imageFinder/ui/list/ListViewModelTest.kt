@@ -151,15 +151,59 @@ class ListViewModelTest {
 
     observer.awaitCount(2)
     observer.assertValueAt(0) { it.isLoading }
-    observer.assertValueAt(1) { it.hasError()}
+    observer.assertValueAt(1) { it.hasError() }
 
     mViewModel.retry()
     observer.awaitCount(4)
 
     observer.assertValueAt(2) { it.isLoading }
-    observer.assertValueAt(3) { it.hasError()}
+    observer.assertValueAt(3) { it.hasError() }
 
     observer.assertNotTerminated()
     observer.dispose()
+  }
+
+  @Test
+  fun `test RetryLastAction twice when internet is off, returns internet error twice`() {
+    mViewModel = ListViewModel(FakeNetworkImageApi(true))
+
+    val observer: TestObserver<Lce<ListUiData>> = TestObserver()
+    mViewModel.states
+       .subscribe(observer)
+
+    observer.assertSubscribed()
+
+    observer.awaitCount(2)
+
+    mViewModel.retry()
+    observer.awaitCount(4)
+
+    mViewModel.retry()
+    observer.awaitCount(6)
+
+    observer.assertValueAt(4) { it.isLoading }
+    observer.assertValueAt(5) { it.hasError() }
+
+    observer.assertNotTerminated()
+    observer.dispose()
+  }
+
+  @Test
+  fun `test resubscribe to ViewModel states twice(rotate screen), returns `() {
+
+    mViewModel.states
+       .test()
+       .assertSubscribed()
+       .awaitCount(2)
+       .dispose()
+    // screen is rotated and subscribe to viewModel again
+    mViewModel.states
+       .test()
+       .awaitCount(2)
+       .assertSubscribed()
+       .assertValueCount(1)
+       .assertValueAt(0) { it.data != null }
+       .assertNotTerminated()
+       .dispose()
   }
 }
