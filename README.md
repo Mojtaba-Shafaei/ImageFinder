@@ -9,7 +9,9 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
 + OkHttp3
 + Gson
 + Glide
-+ Hilt
++ Dependency Injection
+   + in `Master` branch: [Google-Hilt](https://dagger.dev/hilt/)
+   + in `Koin` branch: [Koin](https://insert-koin.io/)
 + JUnit4
 + OkHttp-MockWebServer
 
