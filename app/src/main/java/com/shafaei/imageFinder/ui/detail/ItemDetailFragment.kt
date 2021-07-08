@@ -10,16 +10,12 @@ import com.shafaei.imageFinder.R
 import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.FragmentItemDetailBinding
 import com.shafaei.imageFinder.utils.*
-import dagger.hilt.android.AndroidEntryPoint
-
-
 /**
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a [com.shafaei.imageFinder.ui.list.ItemListFragment]
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-@AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
   private var _binding: FragmentItemDetailBinding? = null
 

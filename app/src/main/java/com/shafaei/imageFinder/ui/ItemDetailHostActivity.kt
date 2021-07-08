@@ -7,9 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.shafaei.imageFinder.R
 import com.shafaei.imageFinder.databinding.ActivityItemDetailBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class ItemDetailHostActivity : AppCompatActivity() {
 
   private lateinit var appBarConfiguration: AppBarConfiguration

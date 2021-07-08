@@ -9,10 +9,8 @@ import com.shafaei.imageFinder.utils.Result.Success
 import com.shafaei.imageFinder.utils.RetrofitUtil
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-
-class NetworkImageApi @Inject constructor(private val imageService: ImageService) : ImageApi {
+class NetworkImageApi(private val imageService: ImageService) : ImageApi {
   override fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>> {
     return Single.defer {
       imageService.searchImages(

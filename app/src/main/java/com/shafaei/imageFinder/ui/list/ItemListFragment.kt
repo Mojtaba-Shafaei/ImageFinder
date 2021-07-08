@@ -7,7 +7,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
@@ -21,11 +20,11 @@ import com.shafaei.imageFinder.exceptions.NoInternetException
 import com.shafaei.imageFinder.kotlinExt.*
 import com.shafaei.imageFinder.ui.detail.ItemDetailFragment
 import com.shafaei.imageFinder.utils.Constants
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**
@@ -36,7 +35,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  * item details. On larger screens, the Navigation controller presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-@AndroidEntryPoint
+
 class ItemListFragment : Fragment() {
 
   private var _binding: FragmentItemListBinding? = null
@@ -51,7 +50,7 @@ class ItemListFragment : Fragment() {
   // The detail fragment, if the layout is sw-600 it will be not-null
   private var itemDetailFragmentContainer: View? = null
 
-  private val mViewModel: ListViewModel by viewModels()
+  private val mViewModel: ListViewModel by viewModel()
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   override fun onCreateView(

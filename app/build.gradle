@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -73,13 +72,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit-ktx:1.1.3"
     androidTestImplementation "androidx.test:rules:1.4.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
-
-    // For instrumentation tests hilt
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$hilt_version"
-    // For local unit tests hilt
-    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    kaptTest "com.google.dagger:hilt-compiler:$hilt_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 
     implementation 'org.mockito:mockito-core:3.11.2'
     //    RX
@@ -105,7 +98,7 @@ dependencies {
 
     implementation("com.github.Mojtaba-Shafaei:AndroidErrorMessage:1.2.7")
 
-    // Hilt dependencies
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
 }

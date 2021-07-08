@@ -128,7 +128,7 @@ class ListViewModelTest {
     observer.assertValueAt(0) { it.isLoading }
     observer.assertValueAt(1) { it.data != null }
 
-    mViewModel.imageBl = FakeNetworkImageApi(true)
+    mViewModel.imageApi = FakeNetworkImageApi(true)
     mViewModel.loadNextPage()
 
     observer.awaitCount(4)

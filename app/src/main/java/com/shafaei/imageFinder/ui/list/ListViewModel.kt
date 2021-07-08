@@ -10,17 +10,14 @@ import com.shafaei.imageFinder.ui.list.SearchAction.NextPageAction
 import com.shafaei.imageFinder.ui.list.SearchAction.RetryAction
 import com.shafaei.imageFinder.ui.models.ListUiParams
 import com.shafaei.imageFinder.utils.*
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
-@HiltViewModel
-class ListViewModel @Inject constructor(var imageBl: ImageApi) : ViewModel() {
+class ListViewModel(var imageApi: ImageApi) : ViewModel() {
   private val mDisposables = CompositeDisposable()
   private val mSearches: PublishSubject<SearchAction> = PublishSubject.create()
 
@@ -54,7 +51,7 @@ class ListViewModel @Inject constructor(var imageBl: ImageApi) : ViewModel() {
             }
           }
           .flatMap { loadAction ->
-            imageBl.search(query = loadAction.query, page = loadAction.page)
+            imageApi.search(query = loadAction.query, page = loadAction.page)
                .map { result ->
                  if (result is Result.Success) {
                    val newItems: List<ImageListItem> = result.data.map { ImageListItem.from(it) }
