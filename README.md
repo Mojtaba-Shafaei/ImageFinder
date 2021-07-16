@@ -2,7 +2,7 @@
 A Kotlin-based Android application for finding Images on [PixaBay](https://pixabay.com)
 
 # Used Libraries and Technologies:
-+ MVVM
++ MVVM and Rx Java2 (MvRx + mvi)
 + androidx.navigation
 + Retrofit2
 + RxJava2
