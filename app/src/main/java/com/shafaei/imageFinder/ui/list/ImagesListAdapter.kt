@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.*
 import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
 import com.shafaei.imageFinder.databinding.LayoutLoadingMoreBinding
-import com.shafaei.imageFinder.ui.list.SimpleItemRecyclerViewAdapter.ViewType.LOADING
+import com.shafaei.imageFinder.ui.list.ImagesListAdapter.ViewType.LOADING
 import com.shafaei.imageFinder.utils.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<ImageListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ImageListItem>() {
+class ImagesListAdapter(private val inflater: LayoutInflater) : ListAdapter<ImageListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ImageListItem>() {
   override fun areItemsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
     return (oldItem.id == newItem.id)
   }

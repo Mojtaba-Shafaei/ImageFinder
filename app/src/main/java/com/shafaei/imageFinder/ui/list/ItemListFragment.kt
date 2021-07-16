@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 class ItemListFragment : Fragment() {
 
   private var _binding: FragmentItemListBinding? = null
-  private val mAdapter: SimpleItemRecyclerViewAdapter by lazy { SimpleItemRecyclerViewAdapter(layoutInflater) }
+  private val mAdapter: ImagesListAdapter by lazy { ImagesListAdapter(layoutInflater) }
 
   private val mDisposables = CompositeDisposable()
 
