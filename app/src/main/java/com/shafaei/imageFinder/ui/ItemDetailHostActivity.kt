@@ -13,11 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class ItemDetailHostActivity : AppCompatActivity() {
 
   private lateinit var appBarConfiguration: AppBarConfiguration
+  private var _binding: ActivityItemDetailBinding? = null
+  private val binding get() = _binding!!
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val binding = ActivityItemDetailBinding.inflate(layoutInflater)
+    _binding = ActivityItemDetailBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_item_detail) as NavHostFragment
@@ -29,5 +31,10 @@ class ItemDetailHostActivity : AppCompatActivity() {
   override fun onSupportNavigateUp(): Boolean {
     val navController = findNavController(R.id.nav_host_fragment_item_detail)
     return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    _binding = null
   }
 }
