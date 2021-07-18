@@ -1,2 +1,2 @@
 rootProject.name = "ImageFinder"
-include ':app'
+include (":app")
