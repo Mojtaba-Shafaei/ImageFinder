@@ -33,4 +33,4 @@ And Place it in `[root project folder\buildSrc\src\main\java]\Congig.kt` Same as
 
 ### Install 
 Since version `1.1.0` the `.apk` file has added to the project. You can find and install it in 
-`[root project folder\apks]\apk\imageFinder.apk`
+`[root project folder]\apk\imageFinder.apk`
