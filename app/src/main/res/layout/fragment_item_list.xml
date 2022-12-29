@@ -30,9 +30,9 @@
      android:background="@null"
      android:imeOptions="flagNoExtractUi|actionSearch"
      app:defaultQueryHint="Search Images..."
-     app:queryHint="@string/enter_n_chars_to_search"
      app:iconifiedByDefault="false"
-     app:queryBackground="@null" />
+     app:queryBackground="@null"
+     app:queryHint="@string/enter_n_chars_to_search" />
 
    <ProgressBar
      android:id="@+id/prgLoading"
@@ -73,9 +73,13 @@
 
  <com.mojtaba_shafaei.android.ErrorMessage
    android:id="@+id/em"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
+   android:layout_width="0dp"
+   android:layout_height="0dp"
    android:background="?attr/backgroundColor"
    android:translationZ="10dp"
-   android:visibility="gone" />
+   android:visibility="gone"
+   app:layout_constraintBottom_toBottomOf="parent"
+   app:layout_constraintEnd_toEndOf="parent"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

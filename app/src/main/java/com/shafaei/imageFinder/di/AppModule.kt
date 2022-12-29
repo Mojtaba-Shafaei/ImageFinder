@@ -40,7 +40,7 @@ val appModules = module {
 
   single<ImageService> { get<Retrofit>().create(ImageService::class.java) }
 
-  single<ImageApi> { NetworkImageApi(imageService = get<ImageService>()) as ImageApi }
+  single<ImageApi> { NetworkImageApi(imageService = get<ImageService>()) }
 
-  viewModel<ListViewModel> { ListViewModel(imageApi = get()) }
+  viewModel { ListViewModel(imageApi = get()) }
 }
