@@ -50,4 +50,4 @@ For `rxjava-koin` and `coroutines-koin` branches put your key in the [Constants]
 
 ### Install 
 Since version `1.1.0` the `.apk` file has added to the project. You can find and install it in 
-`[root project folder]\apk\imageFinder.apk`
+`[app/apks/imagefinder-rxjava-koin.apk]`
