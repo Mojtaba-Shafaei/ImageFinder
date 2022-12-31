@@ -10,14 +10,15 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
 + OkHttp3
 + Gson
 + Glide
-+ Dependency Injection 
-  + Koin 
++ Dependency Injection
+  + Koin
   + Hilt
 + JUnit4
 + OkHttp-MockWebServer
 
 # Branches:
-+ `Master` branch: 
++ `Master` branch: Since 31/12/2022 is deprecated and never get updates, please use one of below ones.
++ `rxjava-hilt` branch:
   + [Google-Hilt](https://dagger.dev/hilt/)
   + RxJava2
 + `rxjava-koin` branch:
@@ -29,6 +30,7 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
   + Mvi Architecture
   + Junit5
   + turbine
+  + mockk
   + [Kotest](https://kotest.io/)
 
 
@@ -36,7 +38,7 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
 ##### Get your own from: https://pixabay.com/api/docs/
 To protect my Pixabay account, I can not share my key here ;)
 But to test the application, you can download the embedded apk.
-   
+
 And Place it in `[root project folder\buildSrc\src\main\java]\Congig.kt` Same as below:    
 `const val API_KEY = "place your api key here..."`
 For `rxjava-koin` and `coroutines-koin` branches put your key in the [Constants] class
@@ -48,6 +50,6 @@ For `rxjava-koin` and `coroutines-koin` branches put your key in the [Constants]
 
 <img src="https://user-images.githubusercontent.com/12367513/126149349-7d380fab-74f2-483d-bf74-d8710b6c3322.png" alt="tablet1" style="max-width:50%;" width = "70%"/>
 
-### Install 
-Since version `1.1.0` the `.apk` file has added to the project. You can find and install it in 
-`[app/apks/imagefinder-rxjava-koin.apk]`
+### Install
+You can find and install the `.apk` file in the `apks` directory in each branch.
+e.g. `[app/apks/imagefinder-rxjava-koin.apk]`
