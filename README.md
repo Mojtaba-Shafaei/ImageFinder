@@ -17,7 +17,8 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
 + OkHttp-MockWebServer
 
 # Branches:
-+ `Master` branch: 
++ `Master` branch: Since 31/12/2022 is deprecated and never get updates, please use one of below ones. 
++ `rxjava-hilt` branch: 
   + [Google-Hilt](https://dagger.dev/hilt/)
   + RxJava2
 + `rxjava-koin` branch:
@@ -29,6 +30,7 @@ A Kotlin-based Android application for finding Images on [PixaBay](https://pixab
   + Mvi Architecture
   + Junit5
   + turbine
+  + mockk
   + [Kotest](https://kotest.io/)
 
 
