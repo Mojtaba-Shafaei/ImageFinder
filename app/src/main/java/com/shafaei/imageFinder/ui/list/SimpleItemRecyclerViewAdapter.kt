@@ -2,13 +2,16 @@ package com.shafaei.imageFinder.ui.list
 
 import android.view.*
 import androidx.recyclerview.widget.*
+import com.bumptech.glide.Glide
 import com.shafaei.imageFinder.businessLogic.local.dto.ImageListItem
 import com.shafaei.imageFinder.databinding.ItemListContentBinding
 import com.shafaei.imageFinder.databinding.LayoutLoadingMoreBinding
 import com.shafaei.imageFinder.ui.list.SimpleItemRecyclerViewAdapter.ViewType.LOADING
-import com.shafaei.imageFinder.utils.*
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import com.shafaei.imageFinder.utils.AndroidUtil
+import com.shafaei.imageFinder.utils.GlideAppModule
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : ListAdapter<ImageListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<ImageListItem>() {
   override fun areItemsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
@@ -24,8 +27,8 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
     setHasStableIds(true)
   }
 
-  private val mClicks: PublishSubject<View> = PublishSubject.create()
-  val clicks: Observable<View> = mClicks
+  private val mClicks = Channel<View>()
+  val clicks: Flow<View> = mClicks.receiveAsFlow()
 
   var loadingMore: Boolean = false
     set(value) {
@@ -51,7 +54,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
       holder.initWith(item)
       with(holder.itemView) {
         tag = item
-        setOnClickListener { mClicks.onNext(this) }
+        setOnClickListener { mClicks.trySend(this) }
       }
     }
   }
@@ -73,7 +76,7 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
 
   inner class ViewHolder(private val binding: ItemListContentBinding) : RecyclerView.ViewHolder(binding.root) {
     fun initWith(item: ImageListItem) {
-      GlideApp.with(binding.ivThumbnail)
+      Glide.with(binding.ivThumbnail)
          .load(item.imagePreviewUrl)
          .apply(GlideAppModule.sharpCornersRequestOptions)
          .placeholder(AndroidUtil.createProgressDrawable(binding.ivThumbnail.context))
@@ -82,7 +85,6 @@ class SimpleItemRecyclerViewAdapter(private val inflater: LayoutInflater) : List
       binding.tvUserName.text = item.userName
       binding.tvTagList.text = item.tagList.joinToString()
     }
-
   }
 
   inner class ViewHolderLoading(binding: LayoutLoadingMoreBinding) : RecyclerView.ViewHolder(binding.root)

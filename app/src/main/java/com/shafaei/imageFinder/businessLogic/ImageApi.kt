@@ -1,9 +1,7 @@
 package com.shafaei.imageFinder.businessLogic
 
-import com.shafaei.imageFinder.businessLogic.network.dto.NetworkImageListItem
-import com.shafaei.imageFinder.utils.Result
-import io.reactivex.Single
+import com.shafaei.imageFinder.businessLogic.network.dto.NetworkImageListResponse
 
 interface ImageApi {
-  fun search(query: String, page: Int): Single<Result<List<NetworkImageListItem>>>
+  suspend fun search(query: String, page: Int): NetworkImageListResponse
 }

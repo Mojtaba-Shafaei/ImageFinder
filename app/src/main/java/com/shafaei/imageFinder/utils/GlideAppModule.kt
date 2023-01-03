@@ -3,7 +3,6 @@ package com.shafaei.imageFinder.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DecodeFormat
@@ -13,8 +12,6 @@ import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.MediaStoreSignature
 import com.shafaei.imageFinder.R
-import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 @GlideModule

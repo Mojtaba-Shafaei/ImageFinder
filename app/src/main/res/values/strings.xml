@@ -12,5 +12,5 @@
  <string name="blank_query_exception">"The Query Can't Be Empty. Please Enter a Query. "</string>
  <string name="short_query_exception">Enter a Query That Has at Least %1$s Length.</string>
  <string name="enter_n_chars_to_search">Enter at Least %1$d Chars to Search…</string>
- <string name="missedPixabayKeyException">The PixaBay Key is Missed.\nDo You Add it to gradle.properties file?</string>
+ <string name="missedPixabayKeyException">The PixaBay Key is Missed.\nHave You Added it to the project?</string>
 </resources>

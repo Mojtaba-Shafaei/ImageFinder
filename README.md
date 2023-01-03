@@ -53,3 +53,6 @@ For `rxjava-koin` and `coroutines-koin` branches put your key in the [Constants]
 ### Install
 You can find and install the `.apk` file in the `apks` directory in each branch.
 e.g. `[app/apks/imagefinder-rxjava-koin.apk]`
+
+### Wiki:
+https://github.com/Mojtaba-Shafaei/ImageFinder/wiki
